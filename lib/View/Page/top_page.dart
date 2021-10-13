@@ -16,7 +16,6 @@ class TopPage extends StatelessWidget {
       rightOnPressed: () {},
       // TODO(you): ユーザ画像取得
       leftImage: const Icon(Icons.account_circle),
-      rightImage: 'images/cog.png',
       body: SafeArea(
         child: GradationBackGround(
           topColor: HexColor('#F7C473'),

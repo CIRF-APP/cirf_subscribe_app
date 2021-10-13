@@ -9,12 +9,10 @@ class ListCard extends StatelessWidget {
   const ListCard({
     required this.title,
     required this.onPressed,
-    required this.iconImage,
   });
 
   final String title;
   final VoidCallback onPressed;
-  final String iconImage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +22,10 @@ class ListCard extends StatelessWidget {
         children: <Widget>[
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: Image.asset(
-              iconImage,
-              height: 20,
-              width: 20,
+            leading: SimpleIcon(
+              icon: const Icon(Icons.chevron_right_rounded),
+              color: HexColor('#815454'),
+              size: 25,
             ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

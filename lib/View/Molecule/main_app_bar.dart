@@ -10,7 +10,6 @@ class MainAppBar extends StatelessWidget {
     required this.body,
     required this.rightOnPressed,
     required this.leftImage,
-    required this.rightImage,
     this.backColor = Colors.white,
     this.textColor = Colors.black,
     this.titleFontSize = 24,
@@ -19,7 +18,6 @@ class MainAppBar extends StatelessWidget {
 
   final Widget body;
   final VoidCallback rightOnPressed;
-  final String rightImage;
   final Icon leftImage;
   final Color backColor;
   final Color textColor;
@@ -60,21 +58,6 @@ class MainAppBar extends StatelessWidget {
             _scaffoldKey.currentState!.openDrawer();
           },
         ),
-        actions: <Widget>[
-          // TODO(you): 「在宅中ラベル」仕様決定/作成完了時に追加
-          ElevatedButton(
-            onPressed: rightOnPressed,
-            style: ElevatedButton.styleFrom(
-              primary: HexColor('#FFA61C'), // background
-              elevation: 0, // foreground
-            ),
-            child: Image.asset(
-              rightImage,
-              width: 20,
-              height: 20,
-            ),
-          )
-        ],
       ),
       drawer: HamburgerMenu(
         targetName: '',

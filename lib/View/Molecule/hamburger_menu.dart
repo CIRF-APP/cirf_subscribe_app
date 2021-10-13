@@ -148,25 +148,20 @@ class HamburgerMenu extends StatelessWidget {
                 children: <Widget>[
                   ListCard(
                     title: '活動量',
-                    iconImage: 'images/heart-solid.png',
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   ListCard(
                     title: '活動量ログ',
-                    iconImage: 'images/file.png',
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.of(context).pushNamed('/activity_log');
                     },
                   ),
                   ListCard(
                     title: '通知一覧',
-                    iconImage: 'images/info-circle-hamburger.png',
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.of(context).pushNamed('/notification_list');
                     },
                   ),
                 ],
