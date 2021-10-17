@@ -1,6 +1,7 @@
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/gradation_background.dart';
 import 'package:cirf_subscription_app/View/Molecule/main_app_bar.dart';
+import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 
 class TopPage extends StatelessWidget {
@@ -8,18 +9,16 @@ class TopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScrollList();
 
-    return MainAppBar(
-      backColor: HexColor('#FFA61C'),
-      textColor: HexColor('#FFFFFFCC'),
-      // TODO(you): rightImage(設定アイコン)押下時の処理
-      rightOnPressed: () {},
-      // TODO(you): ユーザ画像取得
-      leftImage: const Icon(Icons.account_circle),
+
+    /*MainAppBar(
+      backColor: HexColor('#E7E7E7'),
+      textColor: HexColor('#000000'),
       body: SafeArea(
         child: GradationBackGround(
-          topColor: HexColor('#F7C473'),
-          bottomColor: HexColor('#FAF3E4'),
+          topColor: HexColor('#E7E7E7'),
+          bottomColor: HexColor('#FFFFFF'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -43,6 +42,6 @@ class TopPage extends StatelessWidget {
         top: true,
         bottom: false,
       ),
-    );
+    );*/
   }
 }
