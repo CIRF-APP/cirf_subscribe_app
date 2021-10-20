@@ -1,3 +1,4 @@
+import 'package:cirf_subscription_app/View/Atom/FixedText.dart';
 import 'package:cirf_subscription_app/View/Molecule/main_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,10 @@ class ScrollList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    menuTitle[verticalIndex],
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  FixedText(
+                    text: menuTitle[verticalIndex],
+                    size: 24,
+                    weight: FontWeight.bold,
                   ),
                   _buildHorizontalItem(context, verticalIndex),
                 ],
@@ -39,12 +41,14 @@ class ScrollList extends StatelessWidget {
         controller: PageController(viewportFraction: 0.8),
         itemCount: 6,
         itemBuilder: (context, horizontalIndex) {
-          final imageUrl =
-              'https://source.unsplash.com/random/275x240?sig=$verticalIndex$horizontalIndex';
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Card(
-              child: Image.network(imageUrl),
+              child: Container(
+                width: 275,
+                height: 240,
+                color: Colors.blue,
+              ),
             ),
           );
         },

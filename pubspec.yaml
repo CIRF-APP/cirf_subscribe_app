@@ -34,6 +34,7 @@ dependencies:
   dotted_line: ^3.0.0
   auto_size_text_pk: ^3.0.0-nullsafety
   cupertino_icons: ^1.0.2
+  audioplayers: ^0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -45,3 +46,5 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
+  assets:
+    - assets/music/
