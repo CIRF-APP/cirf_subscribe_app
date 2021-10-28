@@ -54,7 +54,11 @@ class ScrollList extends StatelessWidget {
                   color: Colors.blue,
                 ),
                 onPressed: () {
-                  audioController.playAudio(horizontalIndex);
+                  if(audioController.isPlay(horizontalIndex)){
+                    audioController.pauseAudio(horizontalIndex);
+                  } else {
+                    audioController.playAudio(horizontalIndex);
+                  }
                 },
               ),
             ),
