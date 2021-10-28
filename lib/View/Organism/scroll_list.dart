@@ -1,3 +1,4 @@
+import 'package:cirf_subscription_app/Common/audio_controller.dart';
 import 'package:cirf_subscription_app/View/Atom/FixedText.dart';
 import 'package:cirf_subscription_app/View/Molecule/main_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -35,19 +36,26 @@ class ScrollList extends StatelessWidget {
   }
 
   Widget _buildHorizontalItem(BuildContext context, int verticalIndex) {
+    final AudioController audioController = AudioController();
+
     return SizedBox(
       height: 240,
       child: PageView.builder(
         controller: PageController(viewportFraction: 0.8),
-        itemCount: 6,
-        itemBuilder: (context, horizontalIndex) {
+        itemCount: 3,
+        itemBuilder: (BuildContext context, int horizontalIndex) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Card(
-              child: Container(
-                width: 275,
-                height: 240,
-                color: Colors.blue,
+              child: ElevatedButton(
+                child: Container(
+                  width: 275,
+                  height: 240,
+                  color: Colors.blue,
+                ),
+                onPressed: () {
+                  audioController.playAudio(horizontalIndex);
+                },
               ),
             ),
           );
