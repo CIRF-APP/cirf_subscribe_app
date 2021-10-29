@@ -3,10 +3,10 @@ import 'package:audioplayers/audioplayers.dart';
 class AudioController {
   AudioController() {
     _fileName = <String>['music/bgm1.mp3', 'music/bgm2.mp3', 'music/bgm3.mp3'];
-    _isPlaying = <bool>[];
+    _playState = <int>[];
     _audioPlayers = <AudioPlayer?>[];
     for (int i = 0; i < _fileName.length; i++) {
-      _isPlaying.add(false);
+      _playState.add(0);
       _audioPlayers.add(null);
     }
 
@@ -18,31 +18,36 @@ class AudioController {
 
   late AudioCache _cache;
   late List<String> _fileName;
-  late List<bool> _isPlaying;
+  late List<int> _playState;
   late List<AudioPlayer?> _audioPlayers;
 
   void playAudio(int index) async {
-    if (_audioPlayers[index] == null)
-      _audioPlayers[index] = await _cache.play(_fileName[index]);
-    else {
-      //int res = await _audioPlayers[index]!.play(_fileName[index], isLocal: true);
-      _audioPlayers[index]!.resume();
-      // print(res);
+    for(int i = 0; i < _audioPlayers.length; i++) {
+      if (_audioPlayers[i] != null && i != index) {
+        _audioPlayers[i]!.stop();
+        _playState[i] = 0;
+      }
     }
-    _isPlaying[index] = true;
+
+    if (_playState[index] == 2 && _audioPlayers[index] != null)
+      _audioPlayers[index]!.resume();
+    else
+      _audioPlayers[index] = await _cache.play(_fileName[index]);
+
+    _playState[index] = 1;
   }
 
   void pauseAudio(int index) {
     _audioPlayers[index]!.pause();
-    _isPlaying[index] = false;
+    _playState[index] = 2;
   }
 
   void stopAudio(int index) {
     _audioPlayers[index]!.stop();
-    _isPlaying[index] = false;
+    _playState[index] = 0;
   }
 
   bool isPlay(int index) {
-    return _isPlaying[index];
+    return _playState[index] == 1;
   }
 }
