@@ -1,6 +1,6 @@
-import 'package:cirf_subscription_app/Common/hex_color.dart';
-import 'package:cirf_subscription_app/View/Atom/FitText.dart';
-import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:cigarandcoffee/Common/hex_color.dart';
+import 'package:cigarandcoffee/View/Atom/FitText.dart';
+import 'package:cigarandcoffee/View/Atom/simple_icon.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 

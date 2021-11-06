@@ -1,4 +1,4 @@
-# cirf_subscription_app
+# cigarandcoffee
 
 A new Flutter project.
 

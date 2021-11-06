@@ -1,8 +1,8 @@
-import 'package:cirf_subscription_app/Common/hex_color.dart';
-import 'package:cirf_subscription_app/View/Atom/FitText.dart';
-import 'package:cirf_subscription_app/View/Atom/FixedText.dart';
-import 'package:cirf_subscription_app/View/Atom/gradation_background.dart';
-import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:cigarandcoffee/Common/hex_color.dart';
+import 'package:cigarandcoffee/View/Atom/FitText.dart';
+import 'package:cigarandcoffee/View/Atom/FixedText.dart';
+import 'package:cigarandcoffee/View/Atom/gradation_background.dart';
+import 'package:cigarandcoffee/View/Atom/simple_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'list_card.dart';

@@ -1,7 +1,7 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 
-class FitText extends StatelessWidget {
+class FitText extends StatelessWidget {//UIに応じて自動で文字の大きさを調整してくれる
   const FitText({
     required this.text,
     this.maxLines = 1,

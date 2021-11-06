@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SimpleIcon extends StatelessWidget {
+class SimpleIcon extends StatelessWidget {//（flutterに付属してる）
   const SimpleIcon({
-    required this.icon,
+    required this.icon,//icon
     this.color = Colors.black,
     this.size = 17,
   });
@@ -13,6 +13,7 @@ class SimpleIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     // Icons.search
     return Icon(
       icon.icon,
       color: color,

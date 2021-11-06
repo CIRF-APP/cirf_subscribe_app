@@ -1,4 +1,4 @@
-name: cirf_subscription_app
+name: cigarandcoffee
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -48,3 +48,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/music/
+    - assets/
+    - assets/images/

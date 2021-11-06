@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GradationBackGround extends StatelessWidget {
+class GradationBackGround extends StatelessWidget {//背景をグラデーション表示する
   const GradationBackGround({
     required this.topColor,
     required this.bottomColor,
