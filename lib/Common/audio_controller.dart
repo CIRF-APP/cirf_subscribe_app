@@ -37,6 +37,9 @@ class AudioController {
     _playState[index] = 1;
   }
 
+  void playListen(){
+  }
+
   void pauseAudio(int index) {
     _audioPlayers[index]!.pause();
     _playState[index] = 2;

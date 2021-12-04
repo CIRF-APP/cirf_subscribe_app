@@ -35,6 +35,7 @@ dependencies:
   auto_size_text_pk: ^3.0.0-nullsafety
   cupertino_icons: ^1.0.2
   audioplayers: ^0.20.1
+  just_audio: ^0.9.18
 
 dev_dependencies:
   flutter_test:

@@ -4,58 +4,139 @@ import 'package:cigarandcoffee/View/Molecule/main_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class ScrollList extends StatelessWidget {
+  const ScrollList({
+    this.title1 = '再生中',
+    this.title2 = 'おすすめ',
+    this.title3 = '作品一覧',
+  });
+
+  final String title1;
+  final String title2;
+  final String title3;
+
   @override
   Widget build(BuildContext context) {
-    List<String> menuTitle = <String>['理念', 'ビジョン', '戦略' ,'将の心得', '戦術' ];
     return MainAppBar(
-      body: ListView.builder(//ListView.builder
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemCount: 5,
-        itemBuilder: (BuildContext context, int verticalIndex) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: SizedBox(
-              height: 320,//320
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FixedText(
-                    text: menuTitle[verticalIndex],
-                    size: 24,//24
-                    weight: FontWeight.bold,
-                  ),
-                  _buildHorizontalItem(context, verticalIndex),
-                ],
+        body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: SizedBox(
+          height: 960,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FixedText(
+                text: title1,
+                size: 24,
+                weight: FontWeight.bold,
               ),
-            ),
-          );
-        }
+              playingList(context),
+              FixedText(
+                text: title2,
+                size: 24,
+                weight: FontWeight.bold,
+              ),
+              recomList(context),
+              FixedText(
+                text: title3,
+                size: 24,
+                weight: FontWeight.bold,
+              ),
+              compositionList(context),
+            ],
+          ),
+        ),
       ),
-    );
+    ));
   }
 
-  Widget _buildHorizontalItem(BuildContext context, int verticalIndex) {
+  Widget playingList(BuildContext context) {
     final AudioController audioController = AudioController();
-
     return SizedBox(
-      height: 240,//240
-      //width: 320,
-      child: PageView.builder(//今はPageView.blulder→moleculeでボタン5つ並べる
-        controller: PageController(viewportFraction: 0.8),//pagecontrollerサイズ指定？
-        itemCount: 5,//3
+      height: 240,
+      child: PageView.builder(
+        controller: PageController(viewportFraction: 0.8),
+        itemCount: 5,
         itemBuilder: (BuildContext context, int horizontalIndex) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Card(
               child: ElevatedButton(
-                child: SizedBox(//Container(長方形を描画)→写真に変えたい場合imageに変える
-                  width: 275,//275
-                  height: 240,//240
-                  child: Image.asset('images/jon2.png'),
-                  ),
+                child: SizedBox(
+                  //Container(長方形を描画)→写真に変えたい場合imageに変える
+                  width: 275,
+                  height: 240,
+                  child: Image.asset('assets/images/eye.jpg'),
+                ),
                 onPressed: () {
-                  if(audioController.isPlay(horizontalIndex)){
+                  if (audioController.isPlay(horizontalIndex)) {
+                    audioController.pauseAudio(horizontalIndex);
+                  } else {
+                    audioController.playAudio(horizontalIndex);
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget recomList(BuildContext context) {
+    final AudioController audioController = AudioController();
+    return SizedBox(
+      height: 240,
+      child: PageView.builder(
+        controller: PageController(viewportFraction: 0.8),
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int horizontalIndex) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Card(
+              child: ElevatedButton(
+                child: SizedBox(
+                  //Container(長方形を描画)→写真に変えたい場合imageに変える
+                  width: 275,
+                  height: 240,
+                  child: Image.asset('assets/images/eye.jpg'),
+                ),
+                onPressed: () {
+                  if (audioController.isPlay(horizontalIndex)) {
+                    audioController.pauseAudio(horizontalIndex);
+                  } else {
+                    audioController.playAudio(horizontalIndex);
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget compositionList(BuildContext context) {
+    final AudioController audioController = AudioController();
+    return SizedBox(
+      height: 240,
+      child: PageView.builder(
+        controller: PageController(viewportFraction: 0.8),
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int horizontalIndex) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Card(
+              child: ElevatedButton(
+                child: SizedBox(
+                  //Container(長方形を描画)→写真に変えたい場合imageに変える
+                  width: 275,
+                  height: 240,
+                  child: Image.asset('assets/images/eye.jpg'),
+                ),
+                onPressed: () {
+                  if (audioController.isPlay(horizontalIndex)) {
                     audioController.pauseAudio(horizontalIndex);
                   } else {
                     audioController.playAudio(horizontalIndex);
