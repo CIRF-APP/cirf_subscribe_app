@@ -61,14 +61,10 @@ class ScrollList extends StatelessWidget {
         itemBuilder: (BuildContext context, int horizontalIndex) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Card(
+            child: SizedBox(
+              width: 100,
+              height: 80,
               child: ElevatedButton(
-                child: SizedBox(
-                  //Container(長方形を描画)→写真に変えたい場合imageに変える
-                  width: 275,
-                  height: 240,
-                  child: Image.asset('assets/images/eye.jpg'),
-                ),
                 onPressed: () {
                   if (audioController.isPlay(horizontalIndex)) {
                     audioController.pauseAudio(horizontalIndex);
@@ -76,6 +72,10 @@ class ScrollList extends StatelessWidget {
                     audioController.playAudio(horizontalIndex);
                   }
                 },
+                child: Image.asset(
+                  'assets/images/image1.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           );
@@ -100,7 +100,10 @@ class ScrollList extends StatelessWidget {
                   //Container(長方形を描画)→写真に変えたい場合imageに変える
                   width: 275,
                   height: 240,
-                  child: Image.asset('assets/images/eye.jpg'),
+                  child: Image.asset(
+                    'assets/images/image1.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 onPressed: () {
                   if (audioController.isPlay(horizontalIndex)) {
@@ -130,10 +133,12 @@ class ScrollList extends StatelessWidget {
             child: Card(
               child: ElevatedButton(
                 child: SizedBox(
-                  //Container(長方形を描画)→写真に変えたい場合imageに変える
                   width: 275,
                   height: 240,
-                  child: Image.asset('assets/images/eye.jpg'),
+                  child: Image.asset(
+                    'assets/images/image1.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 onPressed: () {
                   if (audioController.isPlay(horizontalIndex)) {
