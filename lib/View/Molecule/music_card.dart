@@ -1,6 +1,6 @@
-import 'package:cigarandcoffee/Common/audio_controller.dart';
-import 'package:cigarandcoffee/Model/audio_card_model.dart';
+import 'package:cigarandcoffee/Common/audio_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MusicCard extends StatelessWidget {
   const MusicCard({
@@ -15,18 +15,14 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AudioFile audioController = AudioFile(musicName);
+    final AudioManager audioManager = Provider.of<AudioManager>(context);
 
     return SizedBox(
       width: 275,
       height: 240,
       child: ElevatedButton(
-        onPressed: () {
-          if (audioController.isPlay()) {
-            audioController.audioPause();
-          } else {
-            audioController.audioPlay();
-          }
+        onPressed: () async {
+          await audioManager.playOneFile(musicName);
         },
         child: Image.asset(
           'assets/images/' + imageFile,

@@ -1,4 +1,3 @@
-import 'package:cigarandcoffee/Common/audio_controller.dart';
 import 'package:cigarandcoffee/View/Atom/FixedText.dart';
 import 'package:cigarandcoffee/View/Molecule/main_app_bar.dart';
 import 'package:cigarandcoffee/View/Molecule/music_card.dart';
@@ -65,8 +64,12 @@ class ScrollList extends StatelessWidget {
             ),
             MusicCard(
               musicName: 'bgm2',
-              imageFile: 'image1.png',
-            )
+              imageFile: 'image2.png',
+            ),
+            MusicCard(
+              musicName: 'bgm3',
+              imageFile: 'image3.png',
+            ),
           ],
         ),
       ),

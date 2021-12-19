@@ -1,9 +1,6 @@
 import 'package:cigarandcoffee/Common/hex_color.dart';
 import 'package:cigarandcoffee/View/Atom/FixedText.dart';
-import 'package:cigarandcoffee/View/Atom/simple_icon.dart';
 import 'package:flutter/material.dart';
-
-import 'hamburger_menu.dart';
 
 class MainAppBar extends StatelessWidget {//画面の大枠
   MainAppBar({
