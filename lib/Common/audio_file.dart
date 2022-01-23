@@ -25,6 +25,7 @@ class AudioFile {
 
   Future<void> audioStop() async {
     await _audioPlayer.stop();
+    _audioPlayer.seek(null);
   }
 
   bool isPlay() {
