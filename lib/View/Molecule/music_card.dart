@@ -4,12 +4,10 @@ import 'package:provider/provider.dart';
 
 class MusicCard extends StatelessWidget {
   const MusicCard({
-    // required this.data,
     required this.musicName,
     required this.imageFile,
   });
 
-  // final AudioCardModel data;
   final String musicName;
   final String imageFile;
 
@@ -20,15 +18,13 @@ class MusicCard extends StatelessWidget {
     return SizedBox(
       width: 275,
       height: 240,
-      child: ElevatedButton(
-        onPressed: () async {
+      child: GestureDetector(
+        onTap: () async {
           await audioManager.playOneFile(musicName);
         },
-        child: Image.asset(
-          'assets/images/' + imageFile,
-          fit: BoxFit.contain,
-        ),
+        child: Image.asset('assets/images/' + imageFile,),
       ),
+
     );
   }
 }

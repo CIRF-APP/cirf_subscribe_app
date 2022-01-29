@@ -31,4 +31,8 @@ class AudioFile {
   bool isPlay() {
     return _audioPlayer.playing;
   }
+
+  Duration getPosition() {
+    return _audioPlayer.position;
+  }
 }
