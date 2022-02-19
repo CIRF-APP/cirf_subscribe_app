@@ -1,9 +1,7 @@
 import 'package:just_audio/just_audio.dart';
 
 class AudioFile {
-  AudioFile(String fileName) {
-    _audioPlayer.setAsset('assets/music/' + fileName + '.mp3');
-  }
+  AudioFile();
 
   final AudioPlayer _audioPlayer = AudioPlayer();
 
@@ -16,6 +14,8 @@ class AudioFile {
   }
 
   Future<void> audioPlay() async {
+    //print(_audioPlayer.processingState);
+    while(_audioPlayer.processingState != ProcessingState.ready) {}
     await _audioPlayer.play();
   }
 

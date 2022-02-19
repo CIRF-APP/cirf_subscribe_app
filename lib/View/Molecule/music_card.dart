@@ -24,7 +24,6 @@ class MusicCard extends StatelessWidget {
         },
         child: Image.asset('assets/images/' + imageFile,),
       ),
-
     );
   }
 }

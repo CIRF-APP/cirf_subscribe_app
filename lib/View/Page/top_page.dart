@@ -1,4 +1,5 @@
 import 'package:cigarandcoffee/View/Organism/scroll_list.dart';
+import 'package:cigarandcoffee/View/Page/music_page.dart';
 import 'package:flutter/material.dart';
 
 class TopPage extends StatelessWidget {
@@ -6,6 +7,6 @@ class TopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScrollList();
+    return MusicPage(musicTitle: 'bgm1'); // ScrollList();
   }
 }

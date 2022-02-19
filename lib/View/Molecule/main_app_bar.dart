@@ -2,9 +2,9 @@ import 'package:cigarandcoffee/Common/hex_color.dart';
 import 'package:cigarandcoffee/View/Atom/FixedText.dart';
 import 'package:flutter/material.dart';
 
-class MainAppBar extends StatelessWidget {//画面の大枠
+class MainAppBar extends StatelessWidget {
   MainAppBar({
-    required this.body,//スワイプする青いカードとか理念とか表示するUI
+    required this.body,
 
     this.backColor = Colors.white,
     this.textColor = Colors.black,

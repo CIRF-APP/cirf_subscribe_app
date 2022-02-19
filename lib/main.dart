@@ -1,3 +1,4 @@
+import 'package:cigarandcoffee/Bloc/play_button_bloc.dart';
 import 'package:cigarandcoffee/Common/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +17,13 @@ class CirfApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(
+        Provider<AudioManager>(
           create: (BuildContext context) => AudioManager(),
           dispose: (BuildContext context, AudioManager audioManager) => audioManager.close(),
+        ),
+        Provider<PlayButtonBloc>(
+          create: (BuildContext context) => PlayButtonBloc(),
+          dispose: (BuildContext context, PlayButtonBloc bloc) => bloc.dispose(),
         ),
       ],
       child: MaterialApp(
@@ -34,3 +39,4 @@ class CirfApp extends StatelessWidget {
     );
   }
 }
+

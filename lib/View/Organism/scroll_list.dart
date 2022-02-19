@@ -1,7 +1,9 @@
+import 'package:cigarandcoffee/Common/audio_manager.dart';
 import 'package:cigarandcoffee/View/Atom/FixedText.dart';
 import 'package:cigarandcoffee/View/Molecule/main_app_bar.dart';
 import 'package:cigarandcoffee/View/Molecule/music_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScrollList extends StatelessWidget {
   const ScrollList({
@@ -16,26 +18,38 @@ class ScrollList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AudioManager audioManager = Provider.of<AudioManager>(context);
     return MainAppBar(
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: 320, //960,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FixedText(
-                  text: title1,
-                  size: 24,
-                  weight: FontWeight.bold,
+      body: FutureBuilder<void>(
+        future: audioManager.loadFiles(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if(snapshot.connectionState == ConnectionState.done) {
+            return Container(
+              padding: EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: 320, //960,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FixedText(
+                        text: title1,
+                        size: 24,
+                        weight: FontWeight.bold,
+                      ),
+                      playingList(context),
+                    ],
+                  ),
                 ),
-                playingList(context),
-              ],
-            ),
-          ),
-        ),
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
