@@ -1,43 +1,70 @@
-import 'package:cigarandcoffee/View/Atom/FixedText.dart';
-import 'package:cigarandcoffee/View/Atom/simple_circle.dart';
+import 'package:cigarandcoffee/Bloc/play_button_bloc.dart';
+import 'package:cigarandcoffee/Common/audio_file.dart';
+import 'package:cigarandcoffee/Common/audio_manager.dart';
+import 'package:cigarandcoffee/Model/music_model.dart';
+import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
 import 'package:cigarandcoffee/View/Molecule/play_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SeekBar extends StatelessWidget {
-  const SeekBar();
+  const SeekBar({
+    required this.musicData,
+  });
+
+  final MusicModel musicData;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(left: 5, right: 5),
-          height: 5,
-          color: Colors.white,
-        ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            FixedText(
-              text: '1:00',
-              size: 12,
-            ),
-            FixedText(
-              text: '4:00',
-              size: 12,
-            ),
-          ],
-        ),
-        SizedBox(height: 10),
-        PlayButton(musicTitle: 'bgm1'),
+    final PlayButtonBloc bloc = Provider.of<PlayButtonBloc>(context);
+    final AudioManager audioManager = Provider.of<AudioManager>(context);
+    final AudioFile audioFile = audioManager.find(musicData.audioName) ?? AudioFile();
 
-        /*SimpleCircle(
-          radius: 30,
-          color: Colors.white,
-        ),*/
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(left: 5, right: 5),
+            height: 5,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              StreamBuilder<String>(
+                initialData: '0:00',
+                stream: null,
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return FixedText(
+                    text: snapshot.data ?? '0:00',
+                    size: 12,
+                  );
+                },
+              ),
+              FixedText(
+                text: audioFile.getAudioLength(),
+                size: 12,
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          StreamBuilder<bool>(
+            stream: bloc.writeController.stream,
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              return PlayButton(
+                isPlay: snapshot.data ?? false,
+                musicTitle: musicData.audioName,
+                onPressed: () async {
+                  bloc.actionController.sink.add(!(snapshot.data ?? false));
+                  await audioManager.playOneFile(musicData.audioName);
+                },
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

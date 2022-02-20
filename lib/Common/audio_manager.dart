@@ -7,7 +7,7 @@ class AudioManager {
     _audioDataBase['bgm3'] = AudioFile();
   }
 
-  Map<String, AudioFile> _audioDataBase = Map<String, AudioFile>();
+  final Map<String, AudioFile> _audioDataBase = <String, AudioFile>{};
 
   Future<void> loadFiles() async {
     await _audioDataBase['bgm1']?.open('bgm1');

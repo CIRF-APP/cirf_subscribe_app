@@ -6,7 +6,7 @@ class AudioFile {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   Future<void> open(String fileName) async {
-    await _audioPlayer.setAsset('assets/music/' + fileName + '.mp3');
+    await _audioPlayer.setAsset('assets/music/$fileName.mp3');
   }
 
   Future<void> close() async {
@@ -34,5 +34,26 @@ class AudioFile {
 
   Duration getPosition() {
     return _audioPlayer.position;
+  }
+
+  String getAudioLength() {
+    final Duration length = _audioPlayer.duration ?? Duration.zero;
+    int seconds = length.inSeconds;
+    int minutes = 0;
+    int hours = 0;
+
+    while(seconds >= 60) {
+      minutes++;
+      seconds -= 60;
+    }
+
+    while(minutes >= 60) {
+      hours++;
+      minutes -= 60;
+    }
+
+    String lengthTime = hours == 0 ? '' : '$hours:';
+    lengthTime += '$minutes:$seconds';
+    return lengthTime;
   }
 }
