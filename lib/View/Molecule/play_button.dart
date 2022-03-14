@@ -16,7 +16,6 @@ class PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final AudioManager audioManager = Provider.of<AudioManager>(context);
 
     return Padding(

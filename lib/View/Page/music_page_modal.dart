@@ -1,6 +1,6 @@
 import 'package:cigarandcoffee/Model/music_model.dart';
 import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
-import 'package:cigarandcoffee/View/Organism/seek_bar.dart';
+import 'package:cigarandcoffee/View/Organism/music_control_area.dart';
 import 'package:flutter/material.dart';
 
 class MusicPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class MusicPage extends StatelessWidget {
               size: 24,
               weight: FontWeight.bold,
             ),
-            SeekBar(
+            MusicControlArea(
               musicData: musicData,
             ),
           ],

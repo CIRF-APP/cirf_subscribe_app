@@ -7,6 +7,7 @@ class AudioFile {
 
   Future<void> open(String fileName) async {
     await _audioPlayer.setAsset('assets/music/$fileName.mp3');
+    _audioPlayer.currentIndex
   }
 
   Future<void> close() async {
@@ -34,6 +35,19 @@ class AudioFile {
 
   Duration getPosition() {
     return _audioPlayer.position;
+  }
+
+  Future<void> setPosition(double value) async {
+    final Duration length = _audioPlayer.duration ?? Duration.zero;
+    final int targetSecond = length.inSeconds * value as int;
+    print(targetSecond);
+    await _audioPlayer.seek(Duration(seconds: targetSecond));
+  }
+
+  double getTotalSecond() {
+    final Duration length = _audioPlayer.duration ?? Duration.zero;
+    final double total = length.inSeconds as double;
+    return total;
   }
 
   String getAudioLength() {

@@ -1,70 +1,204 @@
-import 'package:cigarandcoffee/Bloc/play_button_bloc.dart';
-import 'package:cigarandcoffee/Common/audio_file.dart';
-import 'package:cigarandcoffee/Common/audio_manager.dart';
-import 'package:cigarandcoffee/Model/music_model.dart';
-import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
-import 'package:cigarandcoffee/View/Molecule/play_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class SeekBar extends StatelessWidget {
+class SeekBar extends StatefulWidget {
   const SeekBar({
-    required this.musicData,
+    this.progressWidth = 1.0,
+    this.thumbRadius = 7.0,
+    this.value = 0.0,
+    this.secondValue = 0.0,
+    this.barColor = const Color(0x73FFFFFF),
+    this.progressColor = Colors.white,
+    this.secondProgressColor = const Color(0xBBFFFFFF),
+    this.thumbColor = Colors.white,
+    required this.onStartTrackingTouch,
+    required this.onProgressChanged,
+    required this.onStopTrackingTouch,
   });
 
-  final MusicModel musicData;
+  final double progressWidth;
+  final double thumbRadius;
+  final double value;
+  final double secondValue;
+  final Color barColor;
+  final Color progressColor;
+  final Color secondProgressColor;
+  final Color thumbColor;
+  final Function onStartTrackingTouch;
+  final ValueChanged<double> onProgressChanged;
+  final Function onStopTrackingTouch;
+
+  @override
+  _SeekBarState createState() {
+    return _SeekBarState();
+  }
+}
+
+class _SeekBarState extends State<SeekBar> {
+  Offset _touchPoint = Offset.zero;
+  double _value = 0.0;
+  double _secondValue = 0.0;
+  bool _touchDown = false;
+
+  void _setValue() {
+    _value = _touchPoint.dx / context.size!.width;
+  }
+
+  void _checkTouchPoint() {
+    if (_touchPoint.dx <= 0) {
+      _touchPoint = Offset(0, _touchPoint.dy);
+    }
+    if (_touchPoint.dx >= context.size!.width) {
+      _touchPoint = Offset(context.size!.width, _touchPoint.dy);
+    }
+  }
+
+  @override
+  void initState() {
+    _value = widget.value > 1
+        ? 1
+        : widget.value < 0
+            ? 0
+            : widget.value;
+    _secondValue = widget.secondValue > 1
+        ? 1
+        : widget.secondValue < 0
+            ? 0
+            : widget.secondValue;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(SeekBar oldWidget) {
+    _value = widget.value > 1
+        ? 1
+        : widget.value < 0
+            ? 0
+            : widget.value;
+    _secondValue = widget.secondValue > 1
+        ? 1
+        : widget.secondValue < 0
+            ? 0
+            : widget.secondValue;
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final PlayButtonBloc bloc = Provider.of<PlayButtonBloc>(context);
-    final AudioManager audioManager = Provider.of<AudioManager>(context);
-    final AudioFile audioFile = audioManager.find(musicData.audioName) ?? AudioFile();
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            height: 5,
-            color: Colors.white,
+    return GestureDetector(
+      onHorizontalDragDown: (DragDownDetails details) {
+        final RenderBox? box = context.findRenderObject() as RenderBox?;
+        _touchPoint = box!.globalToLocal(details.globalPosition);
+        _checkTouchPoint();
+        setState(() {
+          _setValue();
+          _touchDown = true;
+        });
+        if (widget.onStartTrackingTouch != null) {
+          widget.onStartTrackingTouch();
+        }
+      },
+      onHorizontalDragUpdate: (DragUpdateDetails details) {
+        final RenderBox? box = context.findRenderObject() as RenderBox?;
+        _touchPoint = box!.globalToLocal(details.globalPosition);
+        _checkTouchPoint();
+        setState(() {
+          _setValue();
+        });
+        if (widget.onProgressChanged != null) {
+          widget.onProgressChanged(_value);
+        }
+      },
+      onHorizontalDragEnd: (DragEndDetails details) {
+        setState(() {
+          _touchDown = false;
+        });
+        if (widget.onStopTrackingTouch != null) {
+          widget.onStopTrackingTouch();
+        }
+      },
+      child: Container(
+        constraints: BoxConstraints.expand(height: widget.thumbRadius * 2),
+        child: CustomPaint(
+          painter: _SeekBarPainter(
+            progressWidth: widget.progressWidth,
+            thumbRadius: widget.thumbRadius,
+            value: _value,
+            secondValue: _secondValue,
+            barColor: widget.barColor,
+            progressColor: widget.progressColor,
+            secondProgressColor: widget.secondProgressColor,
+            thumbColor: widget.thumbColor,
+            touchDown: _touchDown,
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              StreamBuilder<String>(
-                initialData: '0:00',
-                stream: null,
-                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                  return FixedText(
-                    text: snapshot.data ?? '0:00',
-                    size: 12,
-                  );
-                },
-              ),
-              FixedText(
-                text: audioFile.getAudioLength(),
-                size: 12,
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          StreamBuilder<bool>(
-            stream: bloc.writeController.stream,
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              return PlayButton(
-                isPlay: snapshot.data ?? false,
-                musicTitle: musicData.audioName,
-                onPressed: () async {
-                  bloc.actionController.sink.add(!(snapshot.data ?? false));
-                  await audioManager.playOneFile(musicData.audioName);
-                },
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
+  }
+}
+
+class _SeekBarPainter extends CustomPainter {
+  _SeekBarPainter({
+    required this.progressWidth,
+    required this.thumbRadius,
+    required this.value,
+    required this.secondValue,
+    required this.barColor,
+    required this.progressColor,
+    required this.secondProgressColor,
+    required this.thumbColor,
+    required this.touchDown,
+  });
+
+  final double progressWidth;
+  final double thumbRadius;
+  final double value;
+  final double secondValue;
+  final Color barColor;
+  final Color progressColor;
+  final Color secondProgressColor;
+  final Color thumbColor;
+  final bool touchDown;
+
+  @override
+  bool shouldRepaint(_SeekBarPainter old) {
+    return value != old.value || secondValue != old.secondValue || touchDown != old.touchDown;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..isAntiAlias = true
+      ..strokeCap = StrokeCap.square
+      ..strokeWidth = progressWidth;
+
+    final double centerY = size.height / 2.0;
+    final double barLength = size.width - thumbRadius * 2.0;
+
+    final Offset startPoint = Offset(thumbRadius, centerY);
+    final Offset endPoint = Offset(size.width - thumbRadius, centerY);
+    final Offset progressPoint = Offset(barLength * value + thumbRadius, centerY);
+    final Offset secondProgressPoint = Offset(barLength * secondValue + thumbRadius, centerY);
+
+    paint.color = barColor;
+    canvas.drawLine(startPoint, endPoint, paint);
+
+    paint.color = secondProgressColor;
+    canvas.drawLine(startPoint, secondProgressPoint, paint);
+
+    paint.color = progressColor;
+    canvas.drawLine(startPoint, progressPoint, paint);
+
+    final Paint thumbPaint = Paint()..isAntiAlias = true;
+
+    thumbPaint.color = Colors.transparent;
+    canvas.drawCircle(progressPoint, centerY, thumbPaint);
+
+    if (touchDown) {
+      thumbPaint.color = thumbColor.withOpacity(0.6);
+      canvas.drawCircle(progressPoint, thumbRadius, thumbPaint);
+    }
+
+    thumbPaint.color = thumbColor;
+    canvas.drawCircle(progressPoint, thumbRadius * 0.75, thumbPaint);
   }
 }

@@ -3,6 +3,7 @@ import 'package:cigarandcoffee/Common/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'View/Page/_seek_bar_page_.dart';
 import 'View/Page/top_page.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class CirfApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      // ignore: always_specify_type
       providers: [
         Provider<AudioManager>(
           create: (BuildContext context) => AudioManager(),
@@ -34,6 +36,7 @@ class CirfApp extends StatelessWidget {
           '/top': (BuildContext context) => const TopPage(),
         },
         // Blocパターン用
+        //home: TestSeekBarPage(),
         home: const TopPage(),
       ),
     );

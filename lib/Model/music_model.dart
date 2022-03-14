@@ -1,3 +1,5 @@
+import 'package:cigarandcoffee/Common/audio_file.dart';
+
 class MusicModel {
   MusicModel({
     required this.audioName,
