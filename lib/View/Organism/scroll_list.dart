@@ -36,21 +36,21 @@ class ScrollList extends StatelessWidget {
                 MusicCard(
                   musicData: MusicModel(
                     audioName: 'bgm1',
-                    audioFile: 'bgm1.mp3',
+                    audioFile: 'bgm26.mp3',
                     imageFile: 'image1.png',
                   ),
                 ),
                 MusicCard(
                   musicData: MusicModel(
                     audioName: 'bgm2',
-                    audioFile: 'bgm2.mp3',
+                    audioFile: 'bgm27.mp3',
                     imageFile: 'image2.png',
                   ),
                 ),
                 MusicCard(
                   musicData: MusicModel(
                     audioName: 'bgm3',
-                    audioFile: 'bgm3.mp3',
+                    audioFile: 'bgm28.mp3',
                     imageFile: 'image3.png',
                   ),
                 ),

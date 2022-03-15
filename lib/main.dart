@@ -1,12 +1,17 @@
 import 'package:cigarandcoffee/Bloc/play_button_bloc.dart';
 import 'package:cigarandcoffee/Common/audio_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-
-import 'View/Page/_seek_bar_page_.dart';
+import 'Common/csv_reader.dart';
+import 'Model/music_model.dart';
 import 'View/Page/top_page.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(MusicModelAdapter());
+  ReadCSVFile();
   runApp(const CirfApp());
 }
 
@@ -36,7 +41,6 @@ class CirfApp extends StatelessWidget {
           '/top': (BuildContext context) => const TopPage(),
         },
         // Blocパターン用
-        //home: TestSeekBarPage(),
         home: const TopPage(),
       ),
     );

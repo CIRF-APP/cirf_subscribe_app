@@ -7,7 +7,6 @@ import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
 import 'package:cigarandcoffee/View/Molecule/play_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cigarandcoffee/View/Organism/seek_bar.dart';
 
 class MusicControlArea extends StatelessWidget {
   const MusicControlArea({
@@ -27,23 +26,7 @@ class MusicControlArea extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          StreamBuilder<double>(
-            initialData: 0,
-            stream: null,
-            builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
-              return SeekBar(
-                onStartTrackingTouch: () {},
-                onStopTrackingTouch: () {},
-                onProgressChanged: (double value) {
-                  //seekBarBloc.seekJumpController.sink.add(value);
-                  // await audioFile.setPosition(value);
-                  // print(value * audioFile.getTotalSecond());
-                },
-                value: snapshot.data ?? 0,
-                progressWidth: 3.0,
-              );
-            },
-          ),
+          Container(),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
