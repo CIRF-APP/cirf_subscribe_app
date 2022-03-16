@@ -1,6 +1,6 @@
-import 'package:cigarandcoffee/Model/music_model.dart';
-import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
-import 'package:cigarandcoffee/View/Molecule/music_card.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
+import 'package:cirf_subscription_app/View/Molecule/music_card.dart';
 import 'package:flutter/material.dart';
 
 class ScrollList extends StatelessWidget {

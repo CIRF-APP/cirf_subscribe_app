@@ -1,6 +1,6 @@
-import 'package:cigarandcoffee/Common/audio_manager.dart';
-import 'package:cigarandcoffee/View/Molecule/page_app_bar.dart';
-import 'package:cigarandcoffee/View/Organism/scroll_list.dart';
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
+import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,12 +9,12 @@ class TopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AudioManager audioManager = Provider.of<AudioManager>(context);
+    final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
 
     return PageAppBar(
       pageTitle: 'CIRF',
       body: FutureBuilder<void>(
-        future: audioManager.loadFiles(),
+        future: audioDatabaseBloc.fetchAudioData(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(

@@ -1,17 +1,15 @@
-import 'package:cigarandcoffee/Bloc/play_button_bloc.dart';
-import 'package:cigarandcoffee/Common/audio_manager.dart';
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'Common/csv_reader.dart';
-import 'Model/music_model.dart';
-import 'View/Page/top_page.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(MusicModelAdapter());
-  ReadCSVFile();
   runApp(const CirfApp());
 }
 
@@ -24,9 +22,9 @@ class CirfApp extends StatelessWidget {
     return MultiProvider(
       // ignore: always_specify_type
       providers: [
-        Provider<AudioManager>(
-          create: (BuildContext context) => AudioManager(),
-          dispose: (BuildContext context, AudioManager audioManager) => audioManager.close(),
+        Provider<AudioDatabaseBloc>(
+          create: (BuildContext context) => AudioDatabaseBloc(),
+          dispose: (BuildContext context, AudioDatabaseBloc bloc) => bloc.dispose(),
         ),
         Provider<PlayButtonBloc>(
           create: (BuildContext context) => PlayButtonBloc(),

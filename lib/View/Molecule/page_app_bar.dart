@@ -1,6 +1,7 @@
-import 'package:cigarandcoffee/Common/hex_color.dart';
-import 'package:cigarandcoffee/View/Atom/fixed_text.dart';
-import 'package:cigarandcoffee/View/Atom/simple_icon.dart';
+
+import 'package:cirf_subscription_app/Common/hex_color.dart';
+import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
+import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:flutter/material.dart';
 
 class PageAppBar extends StatelessWidget {
@@ -40,7 +41,7 @@ class PageAppBar extends StatelessWidget {
             color: HexColor('#000000'),
           ),
         ),
-        actions: <Widget>[//actionsが基本的に右、配列だから複数指定できる
+        actions: <Widget>[
           IconButton(
             onPressed: () {},
             icon: SimpleIcon(

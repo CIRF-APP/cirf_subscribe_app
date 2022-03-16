@@ -1,6 +1,7 @@
-import 'package:cigarandcoffee/Common/audio_manager.dart';
-import 'package:cigarandcoffee/Model/music_model.dart';
-import 'package:cigarandcoffee/View/Page/music_page_modal.dart';
+
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Page/music_page_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AudioManager audioManager = Provider.of<AudioManager>(context);
+    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
 
     return SizedBox(
       width: 275,
@@ -28,7 +29,7 @@ class MusicCard extends StatelessWidget {
               return MusicPage(musicData: musicData);
             },
           );
-          await audioManager.playOneFile(musicData.audioName);
+          // await bloc.playAudio(musicData.audioName);
         },
         child: SizedBox(
           width: 275,

@@ -1,5 +1,5 @@
-import 'package:cigarandcoffee/Common/audio_manager.dart';
-import 'package:cigarandcoffee/View/Atom/simple_icon.dart';
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AudioManager audioManager = Provider.of<AudioManager>(context);
+    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
 
     return Padding(
       padding: const EdgeInsets.only(right: 30.0),
