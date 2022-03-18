@@ -1,5 +1,6 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
+import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
@@ -12,28 +13,12 @@ class TopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
-    final TextEditingController searchController = TextEditingController();
 
     return PageAppBar(
-      title: SizedBox(
-        height: 36,
-        child: TextField(
-          textAlignVertical: TextAlignVertical.bottom,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-          ),
-          decoration: const InputDecoration(
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-            hintText: 'Input title',
-            hintStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 20,
-            ),
-          ),
-          controller: searchController,
-        ),
+      title: const FixedText(
+        text: 'CIRF',
+        size: 20,
+        color: Colors.black,
       ),
       leftButton: IconButton(
         onPressed: () {},
@@ -44,7 +29,7 @@ class TopPage extends StatelessWidget {
       ),
       rightButton: IconButton(
         onPressed: () {
-          audioDatabaseBloc.searchMusic.add(searchController.text);
+          // audioDatabaseBloc.searchMusic.add(searchController.text);
           Navigator.of(context).pushNamed('/search_res');
         },
         icon: SimpleIcon(

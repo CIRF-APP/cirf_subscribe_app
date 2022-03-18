@@ -1,4 +1,3 @@
-import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/Model/search_result_model.dart';
 import 'package:cirf_subscription_app/Service/audio_database_service.dart';
 import 'package:rxdart/rxdart.dart';

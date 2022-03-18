@@ -10,6 +10,14 @@ class MusicModel {
     required this.imageFile,
   });
 
+  factory MusicModel.emptyModel() {
+    return MusicModel(
+      audioName: '',
+      audioFile: '',
+      imageFile: '',
+    );
+  }
+
   @HiveField(0)
   String audioName;
 

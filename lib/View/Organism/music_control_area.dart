@@ -1,4 +1,3 @@
-import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
@@ -16,9 +15,6 @@ class MusicControlArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayButtonBloc bloc = Provider.of<PlayButtonBloc>(context);
-    // final SeekBarBloc seekBarBloc = Provider.of<SeekBarBloc>(context);
-    final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
-    //final AudioFile audioFile = audioManager.find(musicData.audioName) ?? AudioFile();
 
     return Center(
       child: Column(

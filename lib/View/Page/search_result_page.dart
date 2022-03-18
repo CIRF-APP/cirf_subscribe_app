@@ -6,7 +6,6 @@ import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/music_tile.dart';
 import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
-import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +15,6 @@ class SearchResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
-    final TextEditingController searchController = TextEditingController();
 
     return PageAppBar(
       title: SizedBox(
@@ -36,7 +34,9 @@ class SearchResultPage extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          controller: searchController,
+          onChanged: (String word) {
+            audioDatabaseBloc.searchMusic.add(word);
+          },
         ),
       ),
       leftButton: IconButton(
@@ -48,16 +48,8 @@ class SearchResultPage extends StatelessWidget {
           color: HexColor('#000000'),
         ),
       ),
-      rightButton: IconButton(
-        onPressed: () {
-          audioDatabaseBloc.searchMusic.add(searchController.text);
-        },
-        icon: SimpleIcon(
-          icon: Icons.search,
-          color: HexColor('#000000'),
-        ),
-      ),
       body: StreamBuilder<SearchResultModel>(
+        initialData: SearchResultModel.emptyModel(),
         stream: audioDatabaseBloc.searchResult,
         builder: (BuildContext context, AsyncSnapshot<SearchResultModel> searchResult) {
           return SingleChildScrollView(
@@ -67,7 +59,7 @@ class SearchResultPage extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 10),
                 FixedText(
-                  text: '  ${searchResult.data?.searchWord ?? ''}の検索結果',
+                  text: searchResult.data?.searchWord == '' ? '' : '  ${searchResult.data?.searchWord ?? ''}の検索結果',
                   size: 20,
                   weight: FontWeight.bold,
                 ),

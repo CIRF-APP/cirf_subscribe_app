@@ -1,9 +1,6 @@
-
-import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Page/music_page_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MusicCard extends StatelessWidget {
   const MusicCard({
