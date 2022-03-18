@@ -1,13 +1,17 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Model/search_result_model.dart';
+import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:cirf_subscription_app/View/Molecule/music_tile.dart';
 import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TopPage extends StatelessWidget {
-  const TopPage({Key? key}) : super(key: key);
+class SearchResultPage extends StatelessWidget {
+  const SearchResultPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,49 +40,56 @@ class TopPage extends StatelessWidget {
         ),
       ),
       leftButton: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pop(context);
+        },
         icon: SimpleIcon(
-          icon: Icons.menu,
+          icon: Icons.arrow_back,
           color: HexColor('#000000'),
         ),
       ),
       rightButton: IconButton(
         onPressed: () {
           audioDatabaseBloc.searchMusic.add(searchController.text);
-          Navigator.of(context).pushNamed('/search_res');
         },
         icon: SimpleIcon(
           icon: Icons.search,
           color: HexColor('#000000'),
         ),
       ),
-      body: FutureBuilder<void>(
-        future: audioDatabaseBloc.fetchAudioData(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const ScrollList(title: '再生中'),
-                    const SizedBox(height: 30),
-                    const ScrollList(title: 'おすすめ'),
-                    const SizedBox(height: 30),
-                    const ScrollList(title: 'その他'),
-                  ],
+      body: StreamBuilder<SearchResultModel>(
+        stream: audioDatabaseBloc.searchResult,
+        builder: (BuildContext context, AsyncSnapshot<SearchResultModel> searchResult) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 10),
+                FixedText(
+                  text: '  ${searchResult.data?.searchWord ?? ''}の検索結果',
+                  size: 20,
+                  weight: FontWeight.bold,
                 ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+                const SizedBox(height: 10),
+                for (MusicTile tile in convertMusicTile(searchResult.data?.resultList)) tile,
+              ],
+            ),
+          );
         },
       ),
     );
+  }
+
+  List<MusicTile> convertMusicTile(List<MusicModel>? musicList) {
+    if (musicList == null) {
+      return <MusicTile>[];
+    } else {
+      final List<MusicTile> musicTiles = <MusicTile>[];
+      for (final MusicModel music in musicList) {
+        musicTiles.add(MusicTile(musicData: music));
+      }
+      return musicTiles;
+    }
   }
 }

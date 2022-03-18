@@ -16,19 +16,15 @@ class AudioDatabaseService {
       musicDatabase.add(MusicModel(
         audioName: elems[0],
         audioFile: elems[1],
-        imageFile: elems[2],
+        imageFile: elems[2].replaceAll('\r', ''),
       ));
-
-      final AudioFile audio = AudioFile();
-      await audio.open(elems[1]);
-      audioDataBase[elems[0]] = audio;
     }
   }
 
   List<MusicModel> searchMusic(String word) {
     final List<MusicModel> result = <MusicModel>[];
     for (final MusicModel model in musicDatabase) {
-      if(model.audioName.contains(word)){
+      if(model.audioName.toLowerCase().contains(word.toLowerCase())){
         result.add(model);
       }
     }

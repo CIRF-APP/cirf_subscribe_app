@@ -1,54 +1,43 @@
-
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PageAppBar extends StatelessWidget {
   PageAppBar({
-    required this.pageTitle,
-    this.titleFontSize = 20,
-    this.backColor = Colors.white,
-    this.textColor = Colors.black,
+    required this.title,
+    required this.leftButton,
+    required this.rightButton,
     required this.body,
+    this.backColor = Colors.white,
   });
 
   final Widget body;
+  final Widget title;
+  final Widget leftButton;
+  final Widget rightButton;
   final Color backColor;
-  final String pageTitle;
-  final double titleFontSize;
-  final Color textColor;
 
   // ハンバーガーメニューを閉じるため、Scaffoldにキーを設定しておく
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+
+    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: FixedText(
-          text: pageTitle,
-          size: titleFontSize,
-          color: textColor,
-        ),
+        title: title,
         backgroundColor: backColor,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: SimpleIcon(
-            icon: Icons.menu,
-            color: HexColor('#000000'),
-          ),
-        ),
+        leading: leftButton,
         actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: SimpleIcon(
-              icon: Icons.search,
-              color: HexColor('#000000'),
-            ),
-          ),
+          rightButton,
         ],
       ),
       body: body,

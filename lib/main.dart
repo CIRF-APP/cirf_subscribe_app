@@ -1,6 +1,7 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -37,6 +38,8 @@ class CirfApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
+          // 画面名「/search_res」検索結果画面
+          '/search_res': (BuildContext context) => const SearchResultPage(),
         },
         // Blocパターン用
         home: const TopPage(),

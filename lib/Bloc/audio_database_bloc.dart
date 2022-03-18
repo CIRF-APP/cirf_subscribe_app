@@ -1,12 +1,15 @@
-
 import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Model/search_result_model.dart';
 import 'package:cirf_subscription_app/Service/audio_database_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AudioDatabaseBloc {
   AudioDatabaseBloc() {
     searchWordController.listen((String target) {
-      searchResultController.sink.add(service.searchMusic(target));
+      searchResultController.sink.add(SearchResultModel(
+        searchWord: target,
+        resultList: service.searchMusic(target),
+      ));
     });
   }
 
@@ -21,9 +24,9 @@ class AudioDatabaseBloc {
   Sink<String> get searchMusic => searchWordController.sink;
 
   // 出力(検索結果)
-  final BehaviorSubject<List<MusicModel>> searchResultController = BehaviorSubject<List<MusicModel>>();
+  final BehaviorSubject<SearchResultModel> searchResultController = BehaviorSubject<SearchResultModel>();
 
-  Stream<List<MusicModel>> get searchResult => searchResultController.stream;
+  Stream<SearchResultModel> get searchResult => searchResultController.stream;
 
   final AudioDatabaseService service = AudioDatabaseService();
 
