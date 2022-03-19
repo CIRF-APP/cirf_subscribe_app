@@ -16,6 +16,7 @@ class SearchResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
 
+    audioDatabaseBloc.pageTransition.add(null);
     return PageAppBar(
       title: SizedBox(
         height: 36,
@@ -53,19 +54,21 @@ class SearchResultPage extends StatelessWidget {
         stream: audioDatabaseBloc.searchResult,
         builder: (BuildContext context, AsyncSnapshot<SearchResultModel> searchResult) {
           return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 10),
-                FixedText(
-                  text: searchResult.data?.searchWord == '' ? '' : '  ${searchResult.data?.searchWord ?? ''}の検索結果',
-                  size: 20,
-                  weight: FontWeight.bold,
-                ),
-                const SizedBox(height: 10),
-                for (MusicTile tile in convertMusicTile(searchResult.data?.resultList)) tile,
-              ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: 10),
+                  FixedText(
+                    text: searchResult.data?.searchWord == '' ? '' : '${searchResult.data?.searchWord ?? ''}の検索結果',
+                    size: 20,
+                    weight: FontWeight.bold,
+                  ),
+                  const SizedBox(height: 10),
+                  for (MusicTile tile in convertMusicTile(searchResult.data?.resultList)) tile,
+                ],
+              ),
             ),
           );
         },

@@ -10,6 +10,10 @@ class AudioDatabaseBloc {
         resultList: service.searchMusic(target),
       ));
     });
+
+    pageController.listen((_) {
+      searchResultController.sink.add(SearchResultModel.emptyModel());
+    });
   }
 
   // 入力(音楽カードタップ時)
@@ -21,6 +25,11 @@ class AudioDatabaseBloc {
   final BehaviorSubject<String> searchWordController = BehaviorSubject<String>();
 
   Sink<String> get searchMusic => searchWordController.sink;
+
+  // 入力(ページ遷移時)
+  final BehaviorSubject<void> pageController = BehaviorSubject<void>();
+
+  Sink<void> get pageTransition => pageController.sink;
 
   // 出力(検索結果)
   final BehaviorSubject<SearchResultModel> searchResultController = BehaviorSubject<SearchResultModel>();

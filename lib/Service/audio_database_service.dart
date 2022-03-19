@@ -23,8 +23,11 @@ class AudioDatabaseService {
 
   List<MusicModel> searchMusic(String word) {
     final List<MusicModel> result = <MusicModel>[];
+    if(word.isEmpty)
+      return result;
+
     for (final MusicModel model in musicDatabase) {
-      if(model.audioName.toLowerCase().contains(word.toLowerCase())){
+      if(model.audioName.toLowerCase().startsWith(word.toLowerCase())){
         result.add(model);
       }
     }
