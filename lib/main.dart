@@ -1,10 +1,15 @@
-import 'package:cigarandcoffee/Common/audio_manager.dart';
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
+import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'View/Page/top_page.dart';
-
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(MusicModelAdapter());
   runApp(const CirfApp());
 }
 
@@ -15,10 +20,15 @@ class CirfApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      // ignore: always_specify_type
       providers: [
-        Provider(
-          create: (BuildContext context) => AudioManager(),
-          dispose: (BuildContext context, AudioManager audioManager) => audioManager.close(),
+        Provider<AudioDatabaseBloc>(
+          create: (BuildContext context) => AudioDatabaseBloc(),
+          dispose: (BuildContext context, AudioDatabaseBloc bloc) => bloc.dispose(),
+        ),
+        Provider<PlayButtonBloc>(
+          create: (BuildContext context) => PlayButtonBloc(),
+          dispose: (BuildContext context, PlayButtonBloc bloc) => bloc.dispose(),
         ),
       ],
       child: MaterialApp(
@@ -27,6 +37,8 @@ class CirfApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
+          // 画面名「/search_res」検索結果画面
+          '/search_res': (BuildContext context) => const SearchResultPage(),
         },
         // Blocパターン用
         home: const TopPage(),
@@ -34,3 +46,4 @@ class CirfApp extends StatelessWidget {
     );
   }
 }
+
