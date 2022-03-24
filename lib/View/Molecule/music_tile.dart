@@ -1,7 +1,9 @@
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Page/music_page_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MusicTile extends StatelessWidget {
   const MusicTile({
@@ -13,6 +15,7 @@ class MusicTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double displayWidth = MediaQuery.of(context).size.width;
+    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
 
     return ElevatedButton(
         style: ButtonStyle(
@@ -24,13 +27,24 @@ class MusicTile extends StatelessWidget {
           fixedSize: MaterialStateProperty.all<Size>(Size(displayWidth - 20, 80)),
           alignment: Alignment.center,
         ),
-        onPressed: () async {
+        onPressed: () {
           showModalBottomSheet(
             backgroundColor: Colors.transparent,
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return MusicPage(musicData: musicData);
+              return FutureBuilder<void>(
+                future: bloc.playAudio(musicData.audioName),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot){
+                  if(snapshot.connectionState == ConnectionState.done) {
+                    return MusicPage(musicData: musicData);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              );
             },
           );
         },

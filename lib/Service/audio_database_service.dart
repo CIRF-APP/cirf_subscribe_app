@@ -5,7 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class AudioDatabaseService {
   final List<MusicModel> musicDatabase = <MusicModel>[];
-  final Map<String, AudioFile> audioDataBase = <String, AudioFile>{};
+  final Map<String, AudioFile> audioDatabase = <String, AudioFile>{};
 
   Future<void> loadAudioData() async {
     final String fileData = await rootBundle.loadString('assets/audio_data.csv');
@@ -18,6 +18,12 @@ class AudioDatabaseService {
         audioFile: elems[1],
         imageFile: elems[2].replaceAll('\r', ''),
       ));
+    }
+
+    for(final MusicModel model in musicDatabase) {
+      final AudioFile audioFile = AudioFile();
+      await audioFile.open(model.audioFile);
+      audioDatabase[model.audioName] = audioFile;
     }
   }
 
@@ -35,8 +41,8 @@ class AudioDatabaseService {
   }
 
   Future<void> playOneFile(String target) async {
-    if(audioDataBase[target] != null) {
-      audioDataBase.forEach((String key, AudioFile value) async {
+    if(audioDatabase[target] != null) {
+      audioDatabase.forEach((String key, AudioFile value) async {
         if (key == target) {
           value.isPlay() ? await value.audioPause() : await value.audioPlay();
         } else {
@@ -47,9 +53,9 @@ class AudioDatabaseService {
   }
 
   void close() {
-    audioDataBase.forEach((String key, AudioFile value) async {
+    audioDatabase.forEach((String key, AudioFile value) async {
       await value.close();
     });
-    audioDataBase.clear();
+    audioDatabase.clear();
   }
 }

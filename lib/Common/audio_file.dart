@@ -14,7 +14,7 @@ class AudioFile {
   }
 
   Future<void> audioPlay() async {
-    while(_audioPlayer.processingState != ProcessingState.ready) {}
+    //while(_audioPlayer.processingState != ProcessingState.ready) {}
     await _audioPlayer.play();
   }
 
