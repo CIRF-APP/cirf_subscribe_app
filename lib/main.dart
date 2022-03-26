@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'View/Page/top_page.dart';
+import 'View/Page/VideoPlayer_Page.dart';
 
 void main() {
   runApp(const CirfApp());
@@ -32,6 +33,8 @@ class CirfApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
+          // 画面名「/videoplayer」トップ画面
+          '/videoplayer': (BuildContext context) => const VideoPlayerPage(),
         },
         // Blocパターン用
         home: const TopPage(),

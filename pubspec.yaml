@@ -38,6 +38,7 @@ dependencies:
   just_audio: ^0.9.18
   video_player: ^2.0.2
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,3 +53,4 @@ flutter:
     - assets/music/
     - assets/
     - assets/images/
+    - assets/video/
