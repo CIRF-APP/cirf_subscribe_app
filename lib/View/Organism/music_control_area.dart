@@ -1,3 +1,4 @@
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
@@ -14,13 +15,17 @@ class MusicControlArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayButtonBloc bloc = Provider.of<PlayButtonBloc>(context);
+    final PlayButtonBloc buttonBloc = Provider.of<PlayButtonBloc>(context);
+    final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(),
+          Slider(
+            value: 0.5,
+            onChanged: (double v) {},
+          ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,14 +48,14 @@ class MusicControlArea extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           StreamBuilder<bool>(
-            stream: bloc.playStatus,
+            stream: buttonBloc.playStatus,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               return PlayButton(
                 isPlay: snapshot.data ?? false,
                 musicTitle: musicData.audioName,
                 onPressed: () async {
-                  bloc.pushButton.add(!(snapshot.data ?? false));
-                  // await audioDatabaseBloc.playAudio(musicData.audioName);
+                  buttonBloc.pushButton.add(!(snapshot.data ?? false));
+                  await audioDatabaseBloc.playAudio(musicData.audioName);
                 },
               );
             },
