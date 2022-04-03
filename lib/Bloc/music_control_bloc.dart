@@ -46,7 +46,6 @@ class MusicControlBloc {
   void getNowTime() {
     _seekMoveController.listen((double value) {
       service.setSeekPosition(targetData, value);
-      _nowSeekController.sink.add(value);
     });
   }
 

@@ -1,6 +1,5 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
-import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:provider/single_child_widget.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(MusicModelAdapter());
   runApp(const CirfApp());
 }
 

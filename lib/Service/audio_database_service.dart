@@ -14,17 +14,16 @@ class AudioDatabaseService {
 
     for (final String line in lines) {
       final List<String> elems = line.split(',');
+      final AudioFile audioFile = AudioFile();
+      await audioFile.open(elems[1]);
+      audioDatabase[elems[0]] = audioFile;
+
       musicDatabase.add(MusicModel(
         audioName: elems[0],
         audioFile: elems[1],
         imageFile: elems[2].replaceAll('\r', ''),
+        musicLength: audioFile.getAudioLength(),
       ));
-    }
-
-    for(final MusicModel model in musicDatabase) {
-      final AudioFile audioFile = AudioFile();
-      await audioFile.open(model.audioFile);
-      audioDatabase[model.audioName] = audioFile;
     }
   }
 
