@@ -55,10 +55,10 @@ class MusicControlArea extends StatelessWidget {
             stream: musicBloc.playStatus,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               return PlayButton(
-                isPlay: snapshot.data ?? false,
+                isPlay: snapshot.data ?? true,
                 musicTitle: musicData.audioName,
                 onPressed: () async {
-                  musicBloc.pushButton.add(audioFile.isPlay());
+                  musicBloc.pushButton.add(!audioFile.isPlay());
                   await musicBloc.playFromButton();
                 },
               );

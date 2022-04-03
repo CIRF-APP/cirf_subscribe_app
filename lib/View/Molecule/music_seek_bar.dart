@@ -25,6 +25,7 @@ class _SeekBar extends State<MusicSeekBar> {
     final MusicControlBloc musicBloc = Provider.of<MusicControlBloc>(context);
 
     return StreamBuilder<Duration>(
+      initialData: Duration.zero,
       stream: widget.audioFile.getPosition(),
       builder: (BuildContext context, AsyncSnapshot<Duration> nowPosition) {
         cursorPos = nowPosition.data!.inSeconds.toDouble() / widget.audioFile.getTotalSecond().toDouble();
