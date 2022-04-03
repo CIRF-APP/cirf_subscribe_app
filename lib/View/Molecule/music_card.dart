@@ -27,7 +27,7 @@ class MusicCard extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return FutureBuilder<void>(
-                future: bloc.playAudio(),
+                future: bloc.playFromCard(),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot){
                   if(snapshot.connectionState == ConnectionState.done) {
                     return MusicPage(musicData: musicData);

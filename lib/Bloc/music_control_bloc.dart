@@ -49,8 +49,12 @@ class MusicControlBloc {
     });
   }
 
-  Future<void> playAudio() async {
-    await service.playOneFile(targetData);
+  Future<void> playFromCard() async {
+    await service.playFromCard(targetData);
+  }
+
+  Future<void> playFromButton() async {
+    await service.playFromButton(targetData);
   }
 
   void dispose() {
