@@ -1,15 +1,14 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
-import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
-import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(MusicModelAdapter());
   runApp(const CirfApp());
 }
 
@@ -21,14 +20,14 @@ class CirfApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       // ignore: always_specify_type
-      providers: [
+      providers: <SingleChildWidget>[
         Provider<AudioDatabaseBloc>(
           create: (BuildContext context) => AudioDatabaseBloc(),
           dispose: (BuildContext context, AudioDatabaseBloc bloc) => bloc.dispose(),
         ),
-        Provider<PlayButtonBloc>(
-          create: (BuildContext context) => PlayButtonBloc(),
-          dispose: (BuildContext context, PlayButtonBloc bloc) => bloc.dispose(),
+        Provider<MusicControlBloc>(
+          create: (BuildContext context) => MusicControlBloc(),
+          dispose: (BuildContext context, MusicControlBloc bloc) => bloc.dispose(),
         ),
       ],
       child: MaterialApp(

@@ -1,6 +1,6 @@
-import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Common/global_instance.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
-import 'package:cirf_subscription_app/View/Molecule/music_card.dart';
+import 'package:cirf_subscription_app/View/Organism/music_card.dart';
 import 'package:flutter/material.dart';
 
 class ScrollList extends StatelessWidget {
@@ -12,7 +12,6 @@ class ScrollList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -32,33 +31,19 @@ class ScrollList extends StatelessWidget {
             width: 900,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <MusicCard>[
-                MusicCard(
-                  musicData: MusicModel(
-                    audioName: 'bgm1',
-                    audioFile: 'bgm26.mp3',
-                    imageFile: 'image1.png',
-                  ),
-                ),
-                MusicCard(
-                  musicData: MusicModel(
-                    audioName: 'bgm2',
-                    audioFile: 'bgm27.mp3',
-                    imageFile: 'image2.png',
-                  ),
-                ),
-                MusicCard(
-                  musicData: MusicModel(
-                    audioName: 'bgm3',
-                    audioFile: 'bgm28.mp3',
-                    imageFile: 'image3.png',
-                  ),
-                ),
-              ],
+              children: getMusicCardList(),
             ),
           ),
         ),
       ],
     );
+  }
+
+  List<MusicCard> getMusicCardList() {
+    final List<MusicCard> musicList = <MusicCard>[];
+    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[25]));
+    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[26]));
+    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[27]));
+    return musicList;
   }
 }

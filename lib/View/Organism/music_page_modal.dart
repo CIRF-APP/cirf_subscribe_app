@@ -1,6 +1,6 @@
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
-import 'package:cirf_subscription_app/View/Organism/music_control_area.dart';
+import 'package:cirf_subscription_app/View/Molecule/music_control_area.dart';
 import 'package:flutter/material.dart';
 
 class MusicPage extends StatelessWidget {

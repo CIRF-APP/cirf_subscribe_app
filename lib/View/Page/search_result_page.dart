@@ -4,7 +4,7 @@ import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/Model/search_result_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
-import 'package:cirf_subscription_app/View/Molecule/music_tile.dart';
+import 'package:cirf_subscription_app/View/Organism/music_tile.dart';
 import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

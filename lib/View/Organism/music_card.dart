@@ -1,6 +1,8 @@
+import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
-import 'package:cirf_subscription_app/View/Page/music_page_modal.dart';
+import 'package:cirf_subscription_app/View/Organism/music_page_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MusicCard extends StatelessWidget {
   const MusicCard({
@@ -11,22 +13,33 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
+    final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
     return SizedBox(
       width: 275,
       height: 240,
       child: ElevatedButton(
-        onPressed: () async {
+        onPressed: () {
+          bloc.setMusicData.add(musicData);
           showModalBottomSheet(
             backgroundColor: Colors.transparent,
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return MusicPage(musicData: musicData);
+              return FutureBuilder<void>(
+                future: bloc.playFromCard(),
+                builder: (BuildContext context, AsyncSnapshot<void> snapshot){
+                  if(snapshot.connectionState == ConnectionState.done) {
+                    return MusicPage(musicData: musicData);
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              );
             },
           );
-          // await bloc.playAudio(musicData.audioName);
         },
         child: SizedBox(
           width: 275,

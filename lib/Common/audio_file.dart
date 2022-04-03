@@ -14,7 +14,6 @@ class AudioFile {
   }
 
   Future<void> audioPlay() async {
-    while(_audioPlayer.processingState != ProcessingState.ready) {}
     await _audioPlayer.play();
   }
 
@@ -31,14 +30,18 @@ class AudioFile {
     return _audioPlayer.playing;
   }
 
-  Duration getPosition() {
-    return _audioPlayer.position;
+  Stream<Duration> getPosition() {
+    return _audioPlayer.positionStream;
   }
 
-  double getTotalSecond() {
+  Future<void> setPosition(double value) async {
+    final double pos = value * getTotalSecond();
+    await _audioPlayer.seek(Duration(seconds: pos.toInt()));
+  }
+
+  int getTotalSecond() {
     final Duration length = _audioPlayer.duration ?? Duration.zero;
-    final double total = length.inSeconds as double;
-    return total;
+    return length.inSeconds;
   }
 
   String getAudioLength() {
@@ -57,8 +60,19 @@ class AudioFile {
       minutes -= 60;
     }
 
-    String lengthTime = hours == 0 ? '' : '$hours:';
-    lengthTime += '$minutes:$seconds';
-    return lengthTime;
+    String sStr = seconds.toString();
+    String mStr = minutes.toString();
+    String hStr = hours.toString();
+
+    if(sStr.length == 1)
+      sStr = '0$sStr';
+    if(mStr.length == 1)
+      mStr = '0$mStr';
+    if(hStr.length == 1)
+      hStr = '0$hStr';
+
+    String nowTime = hStr == '00' ? '' : hStr;
+    nowTime += '$mStr:$sStr';
+    return nowTime;
   }
 }
