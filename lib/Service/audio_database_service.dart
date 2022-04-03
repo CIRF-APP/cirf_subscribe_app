@@ -3,6 +3,7 @@ import 'package:cirf_subscription_app/Common/audio_file.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+
 class AudioDatabaseService {
   final List<MusicModel> musicDatabase = <MusicModel>[];
   final Map<String, AudioFile> audioDatabase = <String, AudioFile>{};
@@ -38,18 +39,6 @@ class AudioDatabaseService {
       }
     }
     return result;
-  }
-
-  Future<void> playOneFile(String target) async {
-    if(audioDatabase[target] != null) {
-      audioDatabase.forEach((String key, AudioFile value) async {
-        if (key == target) {
-          value.isPlay() ? await value.audioPause() : await value.audioPlay();
-        } else {
-          await value.audioStop();
-        }
-      });
-    }
   }
 
   void close() {

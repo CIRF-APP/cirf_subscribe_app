@@ -1,4 +1,4 @@
-import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Page/music_page_modal.dart';
 import 'package:flutter/material.dart';
@@ -13,20 +13,21 @@ class MusicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
+    final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
     return SizedBox(
       width: 275,
       height: 240,
       child: ElevatedButton(
         onPressed: () {
+          bloc.setMusicData.add(musicData);
           showModalBottomSheet(
             backgroundColor: Colors.transparent,
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
               return FutureBuilder<void>(
-                future: bloc.playAudio(musicData.audioName),
+                future: bloc.playAudio(),
                 builder: (BuildContext context, AsyncSnapshot<void> snapshot){
                   if(snapshot.connectionState == ConnectionState.done) {
                     return MusicPage(musicData: musicData);

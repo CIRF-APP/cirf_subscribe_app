@@ -14,7 +14,6 @@ class AudioFile {
   }
 
   Future<void> audioPlay() async {
-    //while(_audioPlayer.processingState != ProcessingState.ready) {}
     await _audioPlayer.play();
   }
 
@@ -33,6 +32,12 @@ class AudioFile {
 
   Duration getPosition() {
     return _audioPlayer.position;
+  }
+
+  Future<void> setPosition(double value) async {
+    final double pos = value * getTotalSecond();
+    print(pos);
+    await _audioPlayer.seek(Duration(seconds: pos as int));
   }
 
   double getTotalSecond() {

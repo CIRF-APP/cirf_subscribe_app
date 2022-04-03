@@ -1,5 +1,4 @@
-import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
-import 'package:cirf_subscription_app/Bloc/play_button_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/play_button.dart';
@@ -15,16 +14,23 @@ class MusicControlArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayButtonBloc buttonBloc = Provider.of<PlayButtonBloc>(context);
-    final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
+    final MusicControlBloc musicBloc = Provider.of<MusicControlBloc>(context);
 
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Slider(
-            value: 0.5,
-            onChanged: (double v) {},
+          StreamBuilder<double>(
+            initialData: 0,
+            stream: musicBloc.nowTime,
+            builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+              return Slider(
+                value: snapshot.data ?? 0,
+                onChanged: (double v) {
+                  musicBloc.moveSeek.add(v);
+                },
+              );
+            },
           ),
           const SizedBox(height: 10),
           Row(
@@ -40,22 +46,18 @@ class MusicControlArea extends StatelessWidget {
                   );
                 },
               ),
-              // FixedText(
-              //   text: audioFile.getAudioLength(),
-              //   size: 12,
-              // ),
             ],
           ),
           const SizedBox(height: 10),
           StreamBuilder<bool>(
-            stream: buttonBloc.playStatus,
+            stream: musicBloc.playStatus,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               return PlayButton(
                 isPlay: snapshot.data ?? false,
                 musicTitle: musicData.audioName,
                 onPressed: () async {
-                  buttonBloc.pushButton.add(!(snapshot.data ?? false));
-                  await audioDatabaseBloc.playAudio(musicData.audioName);
+                  musicBloc.pushButton.add(!(snapshot.data ?? false));
+                  await musicBloc.playAudio();
                 },
               );
             },
