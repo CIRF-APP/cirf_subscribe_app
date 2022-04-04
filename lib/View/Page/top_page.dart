@@ -2,6 +2,7 @@ import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:cirf_subscription_app/View/Molecule/hamburger_menu.dart';
 import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
@@ -13,29 +14,42 @@ class TopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
+    // ハンバーガーメニューを閉じるため、Scaffoldにキーを設定しておく
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return PageAppBar(
-      title: const FixedText(
-        text: 'CIRF',
-        size: 20,
-        color: Colors.black,
-      ),
-      leftButton: IconButton(
-        onPressed: () {},
-        icon: SimpleIcon(
-          icon: Icons.menu,
-          color: HexColor('#000000'),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: const FixedText(
+          text: 'CIRF',
+          size: 20,
+          color: Colors.black,
         ),
-      ),
-      rightButton: IconButton(
-        onPressed: () {
-          // audioDatabaseBloc.searchMusic.add(searchController.text);
-          Navigator.of(context).pushNamed('/search_res');
-        },
-        icon: SimpleIcon(
-          icon: Icons.search,
-          color: HexColor('#000000'),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            _scaffoldKey.currentState!.openDrawer();
+          },
+          icon: SimpleIcon(
+            icon: Icons.menu,
+            color: HexColor('#000000'),
+          ),
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/search_res');
+            },
+            icon: SimpleIcon(
+              icon: Icons.search,
+              color: HexColor('#000000'),
+            ),
+          ),
+        ],
+      ),
+      drawer: HamburgerMenu(
+
       ),
       body: FutureBuilder<void>(
         future: audioDatabaseBloc.fetchAudioData(),

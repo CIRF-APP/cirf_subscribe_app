@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PageAppBar extends StatelessWidget {
-  PageAppBar({
+  const PageAppBar({
     required this.title,
     required this.leftButton,
     this.rightButton,
@@ -15,13 +15,9 @@ class PageAppBar extends StatelessWidget {
   final Widget? rightButton;
   final Color backColor;
 
-  // ハンバーガーメニューを閉じるため、Scaffoldにキーを設定しておく
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: title,
         backgroundColor: backColor,
