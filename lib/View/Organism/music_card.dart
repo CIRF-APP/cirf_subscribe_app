@@ -26,18 +26,7 @@ class MusicCard extends StatelessWidget {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return FutureBuilder<void>(
-                future: bloc.playFromCard(),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot){
-                  if(snapshot.connectionState == ConnectionState.done) {
-                    return MusicPage(musicData: musicData);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              );
+              return MusicPage(musicData: musicData);
             },
           );
         },

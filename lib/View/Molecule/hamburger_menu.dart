@@ -1,7 +1,3 @@
-import 'package:cirf_subscription_app/Common/hex_color.dart';
-import 'package:cirf_subscription_app/View/Atom/fit_text.dart';
-import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
-import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/list_card.dart';
 import 'package:flutter/material.dart';
 

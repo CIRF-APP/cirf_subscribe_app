@@ -1,20 +1,19 @@
-import 'dart:io';
-
 import 'package:just_audio/just_audio.dart';
 
 class AudioFile {
   AudioFile();
 
   final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _audioSet = false;
 
   Future<void> open(String fileUrl) async {
-    //await _audioPlayer.setAsset('assets/music/$fileName');
-    print(fileUrl);
-    await _audioPlayer.setUrl(fileUrl);
+    final Duration? retDur = await _audioPlayer.setUrl(fileUrl);
+    _audioSet = retDur != null;
   }
 
   Future<void> close() async {
     await _audioPlayer.dispose();
+    _audioSet = false;
   }
 
   Future<void> audioPlay() async {
@@ -32,6 +31,10 @@ class AudioFile {
 
   bool isPlay() {
     return _audioPlayer.playing;
+  }
+
+  bool isSet() {
+    return _audioSet;
   }
 
   Stream<Duration> getPosition() {

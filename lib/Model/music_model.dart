@@ -4,7 +4,6 @@ class MusicModel {
     required this.audioName,
     required this.audioFile,
     required this.imageFile,
-    required this.musicLength,
   });
 
   factory MusicModel.emptyModel() {
@@ -12,12 +11,10 @@ class MusicModel {
       audioName: '',
       audioFile: '',
       imageFile: '',
-      musicLength: '',
     );
   }
 
   String audioName;
   String audioFile;
   String imageFile;
-  String musicLength;
 }

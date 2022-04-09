@@ -1,6 +1,4 @@
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
-import 'package:cirf_subscription_app/Common/audio_file.dart';
-import 'package:cirf_subscription_app/Common/global_instance.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/music_seek_bar.dart';
@@ -18,8 +16,6 @@ class MusicControlArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MusicControlBloc musicBloc = Provider.of<MusicControlBloc>(context);
-    final Map<String, AudioFile> audioDatabase = audioDatabaseService.audioDatabase;
-    final AudioFile audioFile = audioDatabase[musicData.audioName]!;
 
     return Center(
       child: Column(
@@ -27,7 +23,7 @@ class MusicControlArea extends StatelessWidget {
         children: <Widget>[
           MusicSeekBar(
             musicData: musicData,
-            audioFile: audioFile,
+            audioFile: musicBloc.targetAudio,
           ),
           const SizedBox(height: 10),
           Row(
@@ -35,7 +31,7 @@ class MusicControlArea extends StatelessWidget {
             children: <Widget>[
               StreamBuilder<Duration>(
                 initialData: Duration.zero,
-                stream: audioFile.getPosition(),
+                stream: musicBloc.targetAudio.getPosition(),
                 builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
                   return FixedText(
                     text: convertDuration(snapshot.data),
@@ -44,7 +40,7 @@ class MusicControlArea extends StatelessWidget {
                 },
               ),
               FixedText(
-                text: musicData.musicLength,
+                text: musicBloc.targetAudio.getAudioLength(),
                 size: 12,
               ),
             ],
@@ -58,7 +54,7 @@ class MusicControlArea extends StatelessWidget {
                 isPlay: snapshot.data ?? true,
                 musicTitle: musicData.audioName,
                 onPressed: () async {
-                  musicBloc.pushButton.add(!audioFile.isPlay());
+                  musicBloc.pushButton.add(!musicBloc.targetAudio.isPlay());
                   await musicBloc.playFromButton();
                 },
               );

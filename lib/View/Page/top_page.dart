@@ -1,7 +1,6 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Common/exception_behavior.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
-import 'package:cirf_subscription_app/Model/exception_behavior_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/exception_dialog.dart';

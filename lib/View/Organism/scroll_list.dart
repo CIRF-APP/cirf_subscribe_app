@@ -1,7 +1,8 @@
-import 'package:cirf_subscription_app/Common/global_instance.dart';
+import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Organism/music_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScrollList extends StatelessWidget {
   const ScrollList({
@@ -12,6 +13,15 @@ class ScrollList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
+    final List<MusicCard> musicList = <MusicCard>[];
+
+    if(bloc.service.musicDatabase.isNotEmpty){
+      musicList.add(MusicCard(musicData: bloc.service.musicDatabase[25]));
+      musicList.add(MusicCard(musicData: bloc.service.musicDatabase[26]));
+      musicList.add(MusicCard(musicData: bloc.service.musicDatabase[27]));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -31,23 +41,11 @@ class ScrollList extends StatelessWidget {
             width: 900,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: getMusicCardList(),
+              children: musicList,
             ),
           ),
         ),
       ],
     );
-  }
-
-  List<MusicCard> getMusicCardList() {
-    final List<MusicCard> musicList = <MusicCard>[];
-    if(audioDatabaseService.musicDatabase.isEmpty)
-      return musicList;
-    else {
-      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[25]));
-      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[26]));
-      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[27]));
-      return musicList;
-    }
   }
 }
