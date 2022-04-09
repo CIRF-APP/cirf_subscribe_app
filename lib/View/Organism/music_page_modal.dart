@@ -26,7 +26,8 @@ class MusicPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Image.asset('assets/images/${musicData.imageFile}'),
+            Image.network(musicData.imageFile),
+            // Image.asset('assets/images/${musicData.imageFile}'),
             FixedText(
               text: musicData.audioName,
               size: 24,

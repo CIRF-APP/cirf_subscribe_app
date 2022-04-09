@@ -46,7 +46,7 @@ class MusicCard extends StatelessWidget {
           height: 240,
           child: FittedBox(
             fit: BoxFit.cover,
-            child: Image.asset('assets/images/${musicData.imageFile}'),
+            child: Image.network(musicData.imageFile), //Image.asset('assets/images/${musicData.imageFile}'),
           ),
         ),
       ),

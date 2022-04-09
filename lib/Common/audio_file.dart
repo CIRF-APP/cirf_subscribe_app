@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:just_audio/just_audio.dart';
 
 class AudioFile {
@@ -5,8 +7,10 @@ class AudioFile {
 
   final AudioPlayer _audioPlayer = AudioPlayer();
 
-  Future<void> open(String fileName) async {
-    await _audioPlayer.setAsset('assets/music/$fileName');
+  Future<void> open(String fileUrl) async {
+    //await _audioPlayer.setAsset('assets/music/$fileName');
+    print(fileUrl);
+    await _audioPlayer.setUrl(fileUrl);
   }
 
   Future<void> close() async {

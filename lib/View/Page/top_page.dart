@@ -48,9 +48,7 @@ class TopPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: HamburgerMenu(
-
-      ),
+      drawer: const HamburgerMenu(),
       body: FutureBuilder<void>(
         future: audioDatabaseBloc.fetchAudioData(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {

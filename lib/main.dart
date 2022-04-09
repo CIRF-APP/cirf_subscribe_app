@@ -19,7 +19,6 @@ class CirfApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      // ignore: always_specify_type
       providers: <SingleChildWidget>[
         Provider<AudioDatabaseBloc>(
           create: (BuildContext context) => AudioDatabaseBloc(),
