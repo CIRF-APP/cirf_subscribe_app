@@ -1,9 +1,11 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Common/exception_behavior.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
+import 'package:cirf_subscription_app/Model/exception_behavior_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
+import 'package:cirf_subscription_app/View/Molecule/exception_dialog.dart';
 import 'package:cirf_subscription_app/View/Molecule/hamburger_menu.dart';
-import 'package:cirf_subscription_app/View/Molecule/page_app_bar.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,34 +50,49 @@ class TopPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: HamburgerMenu(
+      drawer: const HamburgerMenu(),
+      body: StreamBuilder<void>(
+        initialData: false,
+        stream: audioDatabaseBloc.rebuildStream,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot){
+          return FutureBuilder<int>(
+            future: audioDatabaseBloc.fetchAudioData(),
+            builder: (BuildContext context, AsyncSnapshot<int> httpStatus) {
+              if (httpStatus.connectionState == ConnectionState.done) {
+                WidgetsBinding.instance!.addPostFrameCallback((_) {
+                  if(httpStatus.data != 200) {
+                    showDialog<int>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ExceptionDialog.fromModel(getBehavior(httpStatus.data, context, audioDatabaseBloc));
+                      },
+                    );
+                  }
+                });
 
-      ),
-      body: FutureBuilder<void>(
-        future: audioDatabaseBloc.fetchAudioData(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const ScrollList(title: '再生中'),
-                    const SizedBox(height: 30),
-                    const ScrollList(title: 'おすすめ'),
-                    const SizedBox(height: 30),
-                    const ScrollList(title: 'その他'),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const ScrollList(title: '再生中'),
+                        const SizedBox(height: 30),
+                        const ScrollList(title: 'おすすめ'),
+                        const SizedBox(height: 30),
+                        const ScrollList(title: 'その他'),
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          );
         },
       ),
     );

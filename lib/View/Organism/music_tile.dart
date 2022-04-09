@@ -18,53 +18,53 @@ class MusicTile extends StatelessWidget {
     final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
     return ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-          side: MaterialStateProperty.all<BorderSide>(const BorderSide(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+        side: MaterialStateProperty.all<BorderSide>(const BorderSide(
+          color: Colors.white,
+          width: 3.0,
+        )),
+        fixedSize: MaterialStateProperty.all<Size>(Size(displayWidth - 20, 80)),
+        alignment: Alignment.center,
+      ),
+      onPressed: () {
+        bloc.setMusicData.add(musicData);
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext context) {
+            return FutureBuilder<void>(
+              future: bloc.playFromCard(),
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return MusicPage(musicData: musicData);
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            );
+          },
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          FittedBox(
+            fit: BoxFit.cover,
+            child: Image.network(musicData.imageFile, width: 80, height: 80), //Image.asset('assets/images/${musicData.imageFile}', width: 80, height: 80),
+          ),
+          const SizedBox(width: 30),
+          FixedText(
+            text: musicData.audioName,
+            size: 30,
+            weight: FontWeight.bold,
             color: Colors.white,
-            width: 3.0,
-          )),
-          fixedSize: MaterialStateProperty.all<Size>(Size(displayWidth - 20, 80)),
-          alignment: Alignment.center,
-        ),
-        onPressed: () {
-          bloc.setMusicData.add(musicData);
-          showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return FutureBuilder<void>(
-                future: bloc.playFromCard(),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot){
-                  if(snapshot.connectionState == ConnectionState.done) {
-                    return MusicPage(musicData: musicData);
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              );
-            },
-          );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            FittedBox(
-              fit: BoxFit.cover,
-              child: Image.asset('assets/images/${musicData.imageFile}', width: 80, height: 80),
-            ),
-            const SizedBox(width: 30),
-            FixedText(
-              text: musicData.audioName,
-              size: 30,
-              weight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }

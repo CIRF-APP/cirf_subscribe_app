@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:cirf_subscription_app/Common/api_client.dart';
 import 'package:cirf_subscription_app/Common/audio_file.dart';
+import 'package:cirf_subscription_app/Model/audio_data_model.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -9,19 +11,20 @@ class AudioDatabaseService {
   final Map<String, AudioFile> audioDatabase = <String, AudioFile>{};
 
   Future<void> loadAudioData() async {
-    final String fileData = await rootBundle.loadString('assets/audio_data.csv');
-    final List<String> lines = fileData.split('\n');
+    final AudioDataList model = AudioDataList.emptyModel();
 
-    for (final String line in lines) {
-      final List<String> elems = line.split(',');
+    await fetchApiResult('https://cjb84iihii.execute-api.ap-northeast-1.amazonaws.com/audioAccess-Stage', model);
+
+    print(model.audio_data_list.length);
+    for (final AudioData elem in model.audio_data_list) {
       final AudioFile audioFile = AudioFile();
-      await audioFile.open(elems[1]);
-      audioDatabase[elems[0]] = audioFile;
+      await audioFile.open(elem.AudioURL);
+      audioDatabase[elem.AudioTitle] = audioFile;
 
       musicDatabase.add(MusicModel(
-        audioName: elems[0],
-        audioFile: elems[1],
-        imageFile: elems[2].replaceAll('\r', ''),
+        audioName: elem.AudioTitle,
+        audioFile: elem.AudioURL,
+        imageFile: elem.ImageURL,
         musicLength: audioFile.getAudioLength(),
       ));
     }

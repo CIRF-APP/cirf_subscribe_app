@@ -1,8 +1,10 @@
+import 'package:cirf_subscription_app/Bloc/api_rebuild_bloc.dart';
+import 'package:cirf_subscription_app/Common/api_exception.dart';
 import 'package:cirf_subscription_app/Common/global_instance.dart';
 import 'package:cirf_subscription_app/Model/search_result_model.dart';
 import 'package:rxdart/rxdart.dart';
 
-class AudioDatabaseBloc {
+class AudioDatabaseBloc extends APIRebuildBloc {
   AudioDatabaseBloc() {
     _searchWordController.listen((String target) {
       _searchResultController.sink.add(SearchResultModel(
@@ -14,6 +16,8 @@ class AudioDatabaseBloc {
     _pageController.listen((_) {
       _searchResultController.sink.add(SearchResultModel.emptyModel());
     });
+
+    listenRebuild();
   }
 
   // 入力(音楽カードタップ時)
@@ -37,8 +41,14 @@ class AudioDatabaseBloc {
   Stream<SearchResultModel> get searchResult => _searchResultController.stream;
 
 
-  Future<void> fetchAudioData() async {
-    await audioDatabaseService.loadAudioData();
+  Future<int> fetchAudioData() async {
+    int httpStatus = 200;
+    try {
+      await audioDatabaseService.loadAudioData();
+    } on ApiException catch(e) {
+      httpStatus = e.httpStatus;
+    }
+    return httpStatus;
   }
 
   void dispose() {
