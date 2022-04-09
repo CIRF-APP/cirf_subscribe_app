@@ -41,9 +41,13 @@ class ScrollList extends StatelessWidget {
 
   List<MusicCard> getMusicCardList() {
     final List<MusicCard> musicList = <MusicCard>[];
-    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[25]));
-    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[26]));
-    musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[27]));
-    return musicList;
+    if(audioDatabaseService.musicDatabase.isEmpty)
+      return musicList;
+    else {
+      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[25]));
+      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[26]));
+      musicList.add(MusicCard(musicData: audioDatabaseService.musicDatabase[27]));
+      return musicList;
+    }
   }
 }

@@ -6,24 +6,20 @@ import 'package:rxdart/rxdart.dart';
  * API通信を行うBlocにこのクラスを継承させる
  * 継承先のBlocのコンストラクタで、listenRebuild()を呼び出す
  */
-abstract class APIRebuildBloc {
+class APIRebuildBloc {
   // 入力
-  final BehaviorSubject<bool> detectRebuild = BehaviorSubject<bool>();
+  final BehaviorSubject<void> detectRebuild = BehaviorSubject<void>();
 
-  Sink<bool> get toRebuild => detectRebuild.sink;
+  Sink<void> get toRebuild => detectRebuild.sink;
 
   // 出力
-  final BehaviorSubject<bool> writeRebuild = BehaviorSubject<bool>();
+  final BehaviorSubject<void> writeRebuild = BehaviorSubject<void>();
 
-  Stream<bool> get rebuildStream => writeRebuild.stream;
+  Stream<void> get rebuildStream => writeRebuild.stream;
 
   void listenRebuild() {
-    detectRebuild.listen(
-      (bool value) {
-        if (value) {
-          writeRebuild.sink.add(true);
-        }
-      },
-    );
+    detectRebuild.listen((_) {
+      writeRebuild.sink.add(null);
+    });
   }
 }
