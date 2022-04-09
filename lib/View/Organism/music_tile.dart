@@ -34,18 +34,7 @@ class MusicTile extends StatelessWidget {
           isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {
-            return FutureBuilder<void>(
-              future: bloc.playFromCard(),
-              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return MusicPage(musicData: musicData);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            );
+            return MusicPage(musicData: musicData);
           },
         );
       },
@@ -54,7 +43,7 @@ class MusicTile extends StatelessWidget {
         children: <Widget>[
           FittedBox(
             fit: BoxFit.cover,
-            child: Image.network(musicData.imageFile, width: 80, height: 80), //Image.asset('assets/images/${musicData.imageFile}', width: 80, height: 80),
+            child: Image.network(musicData.imageFile, width: 80, height: 80),
           ),
           const SizedBox(width: 30),
           FixedText(

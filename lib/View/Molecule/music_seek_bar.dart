@@ -35,7 +35,6 @@ class _SeekBar extends State<MusicSeekBar> {
             musicBloc.moveSeek.add(v);
             setState(() {
               cursorPos = v;
-              print(cursorPos);
             });
           },
         );

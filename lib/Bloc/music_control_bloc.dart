@@ -1,5 +1,5 @@
+import 'package:cirf_subscription_app/Common/audio_file.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
-import 'package:cirf_subscription_app/Service/music_control_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MusicControlBloc {
@@ -41,20 +41,24 @@ class MusicControlBloc {
   // 対象の音声データ
   MusicModel targetData = MusicModel.emptyModel();
 
-  final MusicControlService service = MusicControlService();
+  // 対象の音声
+  AudioFile targetAudio = AudioFile();
 
   void getNowTime() {
     _seekMoveController.listen((double value) {
-      service.setSeekPosition(targetData, value);
+      targetAudio.setPosition(value);
     });
   }
 
   Future<void> playFromCard() async {
-    await service.playFromCard(targetData);
+    if(targetAudio.isSet())
+      await targetAudio.close();
+    await targetAudio.open(targetData.audioFile);
+    targetAudio.audioPlay();
   }
 
   Future<void> playFromButton() async {
-    await service.playFromButton(targetData);
+    targetAudio.isPlay() ? await targetAudio.audioPause() : await targetAudio.audioPlay();
   }
 
   void dispose() {

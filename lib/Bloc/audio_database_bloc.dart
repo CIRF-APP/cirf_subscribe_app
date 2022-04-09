@@ -1,7 +1,7 @@
 import 'package:cirf_subscription_app/Bloc/api_rebuild_bloc.dart';
 import 'package:cirf_subscription_app/Common/api_exception.dart';
-import 'package:cirf_subscription_app/Common/global_instance.dart';
 import 'package:cirf_subscription_app/Model/search_result_model.dart';
+import 'package:cirf_subscription_app/Service/audio_database_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AudioDatabaseBloc extends APIRebuildBloc {
@@ -9,7 +9,7 @@ class AudioDatabaseBloc extends APIRebuildBloc {
     _searchWordController.listen((String target) {
       _searchResultController.sink.add(SearchResultModel(
         searchWord: target,
-        resultList: audioDatabaseService.searchMusic(target),
+        resultList: service.searchMusic(target),
       ));
     });
 
@@ -40,11 +40,12 @@ class AudioDatabaseBloc extends APIRebuildBloc {
 
   Stream<SearchResultModel> get searchResult => _searchResultController.stream;
 
+  final AudioDatabaseService service = AudioDatabaseService();
 
   Future<int> fetchAudioData() async {
     int httpStatus = 200;
     try {
-      await audioDatabaseService.loadAudioData();
+      await service.loadAudioData();
     } on ApiException catch(e) {
       httpStatus = e.httpStatus;
     }
@@ -55,7 +56,5 @@ class AudioDatabaseBloc extends APIRebuildBloc {
     _playController.close();
     _searchWordController.close();
     _searchResultController.close();
-
-    audioDatabaseService.close();
   }
 }
