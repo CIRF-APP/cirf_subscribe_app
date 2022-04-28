@@ -16,41 +16,46 @@ class MusicPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
-    return Container(
-      margin: const EdgeInsets.only(top: 64),
-      decoration: const BoxDecoration(
-        color: Colors.redAccent,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
+    return GestureDetector(
+      onVerticalDragEnd: (DragEndDetails? details) {
+        print('onVerticalDragEnd');
+      },
       child: Container(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        child: FutureBuilder<void>(
-          future: bloc.playFromCard(),
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Image.network(musicData.imageFile),
-                  FixedText(
-                    text: musicData.audioName,
-                    size: 24,
-                    weight: FontWeight.bold,
-                  ),
-                  MusicControlArea(
-                    musicData: musicData,
-                  ),
-                ],
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+        margin: const EdgeInsets.only(top: 64),
+        decoration: const BoxDecoration(
+          color: Colors.redAccent,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: FutureBuilder<void>(
+            future: bloc.playFromCard(),
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Image.network(musicData.imageFile),
+                    FixedText(
+                      text: musicData.audioName,
+                      size: 24,
+                      weight: FontWeight.bold,
+                    ),
+                    MusicControlArea(
+                      musicData: musicData,
+                    ),
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

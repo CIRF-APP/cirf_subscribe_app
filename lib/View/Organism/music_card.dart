@@ -24,6 +24,7 @@ class MusicCard extends StatelessWidget {
           showModalBottomSheet(
             backgroundColor: Colors.transparent,
             isScrollControlled: true,
+            enableDrag: false,
             context: context,
             builder: (BuildContext context) {
               return MusicPage(musicData: musicData);
