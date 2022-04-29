@@ -39,6 +39,9 @@ dependencies:
   video_player: ^2.0.2
   hive: ^2.0.6
   hive_flutter: ^1.1.0
+  amplify_flutter: ^0.4.5
+  amplify_authenticator: ^0.1.0
+  amplify_auth_cognito: ^0.4.5
 
 dev_dependencies:
   flutter_test:

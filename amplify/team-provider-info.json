@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cirfsubscribeapp-dev-191605-authRole",
+      "UnauthRoleArn": "arn:aws:iam::508540734739:role/amplify-cirfsubscribeapp-dev-191605-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::508540734739:role/amplify-cirfsubscribeapp-dev-191605-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-cirfsubscribeapp-dev-191605-deployment",
+      "UnauthRoleName": "amplify-cirfsubscribeapp-dev-191605-unauthRole",
+      "StackName": "amplify-cirfsubscribeapp-dev-191605",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:508540734739:stack/amplify-cirfsubscribeapp-dev-191605/62b4f380-c7a5-11ec-96d3-0acea398d7b3",
+      "AmplifyAppId": "d1pzz640m58d5q"
+    },
+    "categories": {
+      "auth": {
+        "cirfsubscribeapp4f4b06d2": {}
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
+import 'View/Page/first_page.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -28,6 +31,10 @@ class CirfApp extends StatelessWidget {
           create: (BuildContext context) => MusicControlBloc(),
           dispose: (BuildContext context, MusicControlBloc bloc) => bloc.dispose(),
         ),
+        Provider<LoginBloc>(
+          create: (BuildContext context) => LoginBloc(),
+          dispose: (BuildContext context, LoginBloc bloc) => bloc.dispose(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -39,7 +46,7 @@ class CirfApp extends StatelessWidget {
           '/search_res': (BuildContext context) => const SearchResultPage(),
         },
         // Blocパターン用
-        home: const TopPage(),
+        home: const FirstPage(),
       ),
     );
   }
