@@ -1,4 +1,3 @@
-
 import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Model/auth_model.dart';
 import 'package:cirf_subscription_app/Service/auth_service.dart';
@@ -38,11 +37,9 @@ class LoginBloc {
 
   // 入力項目を渡す処理
   void sinkLoginData() {
-    loginController.listen(
-      (LoginCredentials value) {
-        pageController.sink.add(value);
-      },
-    );
+    loginController.listen((LoginCredentials value) {
+      pageController.sink.add(value);
+    });
   }
 
   // Controllerを閉じる処理

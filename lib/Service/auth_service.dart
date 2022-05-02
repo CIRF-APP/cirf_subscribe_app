@@ -26,6 +26,7 @@ class AuthService {
       if (session.isSignedIn) {
         final CognitoAuthSession token = session as CognitoAuthSession;
         final String idToken = token.userPoolTokens!.idToken.toString();
+        print(idToken);
         return AuthFlowStatus.success;
       } else {
         // ログインには失敗
@@ -41,6 +42,7 @@ class AuthService {
 
   // ログイン処理
   Future<AuthFlowStatus> loginWithCredentials(LoginCredentials model) async {
+
     try {
       // 入力されたusernameとpasswordで認証成功するかの判別
       final SignInResult result = await Amplify.Auth.signIn(username: model.username, password: model.password);
@@ -52,6 +54,7 @@ class AuthService {
         // IDトークンの取得
         final CognitoAuthSession token = session as CognitoAuthSession;
         final String idToken = token.userPoolTokens!.idToken.toString();
+        print(idToken);
         return AuthFlowStatus.success;
         // 失敗
       } else {

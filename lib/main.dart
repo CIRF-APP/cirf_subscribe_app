@@ -1,6 +1,8 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/confirm_password_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
+import 'package:cirf_subscription_app/View/Page/change_pass_page.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +36,18 @@ class CirfApp extends StatelessWidget {
         Provider<LoginBloc>(
           create: (BuildContext context) => LoginBloc(),
           dispose: (BuildContext context, LoginBloc bloc) => bloc.dispose(),
-        )
+        ),
+        Provider<ConfirmPasswordBloc>(
+          create: (BuildContext context) => ConfirmPasswordBloc(),
+          dispose: (BuildContext context, ConfirmPasswordBloc bloc) => bloc.dispose(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // 画面遷移用
         routes: <String, WidgetBuilder>{
+          // 画面名「/pass_change」
+          '/pass_change': (BuildContext context) => const ChangePassPage(),
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
           // 画面名「/search_res」検索結果画面
