@@ -1,3 +1,5 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/confirm_password_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/View/Page/change_pass_page.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
+import 'package:cirf_subscription_app/amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +17,20 @@ import 'View/Page/first_page.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
+  await configureAmplify();
   runApp(const CirfApp());
+}
+
+Future<void> configureAmplify() async {
+  final AmplifyClass amplify = Amplify;
+  try {
+    await amplify.addPlugins(<AmplifyPluginInterface>[
+      AmplifyAuthCognito(),
+    ]);
+    await amplify.configure(amplifyconfig);
+  } catch(e){
+    print(e.toString());
+  }
 }
 
 class CirfApp extends StatelessWidget {

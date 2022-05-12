@@ -54,18 +54,6 @@ class _ChangePassState extends State<ChangePassPage> {
                         height: 100,
                       ),
                       Center(
-                        child: SizedBox(
-                          height: 88,
-                          width: 326,
-                          child: Image.asset(
-                            'images/logo.png',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
                         child: FixedText(
                           text: '新しいパスワードを設定してください',
                           size: 16,

@@ -44,7 +44,7 @@ class AuthService {
   Future<AuthFlowStatus> loginWithCredentials(LoginCredentials model) async {
 
     try {
-      // 入力されたusernameとpasswordで認証成功するかの判別
+      // 入力されたusernameとpasswordで認証成功するかの判別4
       final SignInResult result = await Amplify.Auth.signIn(username: model.username, password: model.password);
       // サインインされた状態であればセッション参照
       if (result.isSignedIn) {
@@ -107,6 +107,9 @@ class AuthService {
             return AuthFlowStatus.error;
         }
       }
+    } on Exception catch (e){
+      print(e.toString());
+      return AuthFlowStatus.error;
     }
   }
 
@@ -178,6 +181,9 @@ class AuthService {
             return ChangePassFlowStatus.error;
         }
       }
+    } on Exception catch(e) {
+      print(e.toString());
+      return ChangePassFlowStatus.error;
     }
   }
 }

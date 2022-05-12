@@ -96,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
                       StreamBuilder<LoginCredentials>(
                         stream: loginBloc.loginStateAction,
                         builder: (BuildContext context, AsyncSnapshot<LoginCredentials> userData) {
-                          print(userData.data?.username);
                           return FutureBuilder<AuthFlowStatus?>(
                             future: loginBloc.fetchLoginResult(userData.data),
                             builder: (BuildContext context, AsyncSnapshot<AuthFlowStatus?> loginResult) {
@@ -109,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
                                     // fail：ChangePassword()
                                     // error系：ダイアログ
                                     if (status == true) {
-                                      print(loginResult.data);
                                       switch (loginResult.data) {
                                         // 認証成功
                                         case AuthFlowStatus.success:
