@@ -9,11 +9,12 @@
       "UnauthRoleName": "amplify-cirfsubscribeapp-dev-191605-unauthRole",
       "StackName": "amplify-cirfsubscribeapp-dev-191605",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:508540734739:stack/amplify-cirfsubscribeapp-dev-191605/62b4f380-c7a5-11ec-96d3-0acea398d7b3",
-      "AmplifyAppId": "d1pzz640m58d5q"
+      "AmplifyAppId": "d2x5ycr8ygxfmd"
     },
     "categories": {
       "auth": {
-        "cirfsubscribeapp4f4b06d2": {}
+        "cirfsubscribeapp4f4b06d2": {},
+        "cirfsubscribeapp6e53db15": {}
       }
     }
   }
