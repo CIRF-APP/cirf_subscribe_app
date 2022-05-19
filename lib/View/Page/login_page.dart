@@ -67,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      // TODO(you): Android入力フォーム使用時のログ確認
                       InputForm(
                         title: 'パスワード',
                         inputFormController: passwordController,
@@ -81,11 +80,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Center(
                         child: TextButton(
-                          // TODO(you): パスワード忘れ画面の実装
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/sign_up');
+                          },
                           child: FixedText(
                             size: 12,
-                            text: 'パスワードをお忘れの場合',
+                            text: 'アカウントをお持ちで無い場合',
                             color: HexColor('#0019DB'),
                           ),
                         ),

@@ -42,7 +42,6 @@ class AuthService {
 
   // ログイン処理
   Future<AuthFlowStatus> loginWithCredentials(LoginCredentials model) async {
-
     try {
       // 入力されたusernameとpasswordで認証成功するかの判別4
       final SignInResult result = await Amplify.Auth.signIn(username: model.username, password: model.password);
@@ -107,9 +106,34 @@ class AuthService {
             return AuthFlowStatus.error;
         }
       }
-    } on Exception catch (e){
+    } on Exception catch (e) {
       print(e.toString());
       return AuthFlowStatus.error;
+    }
+  }
+
+  // サインアップ
+  Future<SignUpFlowStatus> createAccount(SignUpCredentials model) async {
+    try {
+      if (model.password == model.confirmPass) {
+        final SignUpResult signUpResult = await Amplify.Auth.signUp(
+          username: model.username,
+          password: model.password,
+          options: CognitoSignUpOptions(
+            userAttributes: <CognitoUserAttributeKey, String>{
+              CognitoUserAttributeKey.email: model.username,
+            },
+          ),
+        );
+        print(signUpResult.isSignUpComplete);
+        print(signUpResult.toString());
+        return SignUpFlowStatus.success;
+      } else {
+        return SignUpFlowStatus.fail;
+      }
+    } on AmplifyException catch (authError) {
+      print(authError.message);
+      return SignUpFlowStatus.fail;
     }
   }
 
@@ -181,7 +205,7 @@ class AuthService {
             return ChangePassFlowStatus.error;
         }
       }
-    } on Exception catch(e) {
+    } on Exception catch (e) {
       print(e.toString());
       return ChangePassFlowStatus.error;
     }

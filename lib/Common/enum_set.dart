@@ -20,3 +20,5 @@ fail：入力項目不一致など
 error：パスワード変更処理でのエラー(sessionなども含む)
 */
 enum ChangePassFlowStatus { success, fail, reg_error, input_error, error }
+
+enum SignUpFlowStatus {success, fail}
