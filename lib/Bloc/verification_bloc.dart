@@ -20,12 +20,12 @@ class VerificationBloc {
   Stream<String> get confirmAction => pageController.stream;
 
   // 認証コードの結果を返す処理
-  Future<VerificationFlowStatus?> fetchConfirmResult(String? userName, String? verificationCode) async {
+  Future<VerificationFlowStatus?> fetchConfirmResult(SignUpCredentials? userData, String? verificationCode) async {
     final AuthService service = AuthService();
-    if (userName == null || verificationCode == null) {
+    if (userData == null || verificationCode == null) {
       return null;
     } else {
-      return service.confirmAccount(userName, verificationCode);
+      return service.confirmAccount(userData, verificationCode);
     }
   }
 

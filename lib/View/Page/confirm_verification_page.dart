@@ -90,7 +90,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             stream: verificationBloc.confirmAction,
                             builder: (BuildContext context, AsyncSnapshot<String> verificationCode) {
                               return FutureBuilder<VerificationFlowStatus?>(
-                                future: verificationBloc.fetchConfirmResult(userData.data?.username, verificationCode.data),
+                                future: verificationBloc.fetchConfirmResult(userData.data, verificationCode.data),
                                 builder: (BuildContext context, AsyncSnapshot<VerificationFlowStatus?> verificationResult) {
                                   if (verificationResult.connectionState == ConnectionState.done) {
                                     // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別

@@ -44,7 +44,10 @@ class AuthService {
   Future<AuthFlowStatus> loginWithCredentials(LoginCredentials model) async {
     try {
       // 入力されたusernameとpasswordで認証成功するかの判別4
-      final SignInResult result = await Amplify.Auth.signIn(username: model.username, password: model.password);
+      final SignInResult result = await Amplify.Auth.signIn(
+        username: model.username,
+        password: model.password,
+      );
       // サインインされた状態であればセッション参照
       if (result.isSignedIn) {
         final AuthSession session = await Amplify.Auth.fetchAuthSession(
@@ -136,10 +139,11 @@ class AuthService {
     }
   }
 
-  Future<VerificationFlowStatus> confirmAccount(String userName, String confirmCode) async {
+  Future<VerificationFlowStatus> confirmAccount(
+      SignUpCredentials userData, String confirmCode) async {
     try {
       await Amplify.Auth.confirmSignUp(
-        username: userName,
+        username: userData.username,
         confirmationCode: confirmCode,
       );
 
@@ -148,6 +152,18 @@ class AuthService {
       print('confirmAccount ${authError.message}');
       return VerificationFlowStatus.fail;
     }
+    /*
+    try {
+      final SignInResult result = await Amplify.Auth.signIn(
+        username: userData.username,
+        password: userData.password,
+      );
+
+      print(result.isSignedIn);
+    } on AmplifyException catch (authError) {
+      print('confirmAccount ${authError.message}');
+      return VerificationFlowStatus.fail;
+    }*/
   }
 
   // ログアウト処理
@@ -165,7 +181,8 @@ class AuthService {
   }
 
   // パスワード変更
-  Future<ChangePassFlowStatus> changeFirstPass(PasswordCredentials model) async {
+  Future<ChangePassFlowStatus> changeFirstPass(
+      PasswordCredentials model) async {
     try {
       // TODO(you): セッション内にログイン情報を格納する
       if (model.newPass == model.confirmPass) {

@@ -5,6 +5,7 @@ import 'package:cirf_subscription_app/Bloc/confirm_password_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/View/Page/change_pass_page.dart';
+import 'package:cirf_subscription_app/View/Page/confirm_verification_page.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/sign_up_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'Bloc/sign_up_bloc.dart';
+import 'Bloc/verification_bloc.dart';
 import 'View/Page/first_page.dart';
 
 Future<void> main() async {
@@ -63,6 +65,10 @@ class CirfApp extends StatelessWidget {
           create: (BuildContext context) => SignUpBloc(),
           dispose: (BuildContext context, SignUpBloc bloc) => bloc.dispose(),
         ),
+        Provider<VerificationBloc>(
+          create: (BuildContext context) => VerificationBloc(),
+          dispose: (BuildContext context, VerificationBloc bloc) => bloc.dispose(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -77,7 +83,7 @@ class CirfApp extends StatelessWidget {
           // 画面名「/sign_up」サインアップページ
           '/sign_up': (BuildContext context) => const SignUpPage(),
           // 画面名「/verification」サインアップページ
-          '/verification': (BuildContext context) => const SignUpPage(),
+          '/verification': (BuildContext context) => const VerificationPage(),
         },
         // Blocパターン用
         home: const FirstPage(),

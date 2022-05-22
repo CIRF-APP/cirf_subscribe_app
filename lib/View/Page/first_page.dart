@@ -32,7 +32,7 @@ class FirstPage extends StatelessWidget {
       // セッション無：LoginPage()
       switch (sessionData.data) {
         case AuthFlowStatus.success:
-          return const LoginPage(); // const TopPage();
+          return const TopPage();
 
         case AuthFlowStatus.error:
           return const LoginPage();
