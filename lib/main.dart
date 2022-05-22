@@ -76,6 +76,8 @@ class CirfApp extends StatelessWidget {
           '/search_res': (BuildContext context) => const SearchResultPage(),
           // 画面名「/sign_up」サインアップページ
           '/sign_up': (BuildContext context) => const SignUpPage(),
+          // 画面名「/verification」サインアップページ
+          '/verification': (BuildContext context) => const SignUpPage(),
         },
         // Blocパターン用
         home: const FirstPage(),

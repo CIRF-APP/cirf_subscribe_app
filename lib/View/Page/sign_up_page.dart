@@ -114,6 +114,15 @@ class _SignUpState extends State<SignUpPage> {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
                                   print('WidgetBinding ${loginResult.data}');
+                                  switch(loginResult.data){
+                                    case SignUpFlowStatus.success:
+                                      Navigator.of(context).pushNamed('/verification');
+                                      break;
+
+                                    case SignUpFlowStatus.fail:
+                                      print('失敗島');
+                                      break;
+                                  }
                                 });
                                 return ProgressButton(
                                   text: '登録',

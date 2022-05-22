@@ -116,7 +116,7 @@ class AuthService {
   Future<SignUpFlowStatus> createAccount(SignUpCredentials model) async {
     try {
       if (model.password == model.confirmPass) {
-        final SignUpResult signUpResult = await Amplify.Auth.signUp(
+        await Amplify.Auth.signUp(
           username: model.username,
           password: model.password,
           options: CognitoSignUpOptions(
@@ -125,15 +125,28 @@ class AuthService {
             },
           ),
         );
-        print(signUpResult.isSignUpComplete);
-        print(signUpResult.toString());
+
         return SignUpFlowStatus.success;
       } else {
         return SignUpFlowStatus.fail;
       }
     } on AmplifyException catch (authError) {
-      print(authError.message);
+      print('createAccount ${authError.message}');
       return SignUpFlowStatus.fail;
+    }
+  }
+
+  Future<VerificationFlowStatus> confirmAccount(String userName, String confirmCode) async {
+    try {
+      await Amplify.Auth.confirmSignUp(
+        username: userName,
+        confirmationCode: confirmCode,
+      );
+
+      return VerificationFlowStatus.success;
+    } on AmplifyException catch (authError) {
+      print('confirmAccount ${authError.message}');
+      return VerificationFlowStatus.fail;
     }
   }
 
