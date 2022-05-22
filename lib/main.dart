@@ -18,6 +18,7 @@ import 'package:provider/single_child_widget.dart';
 import 'Bloc/sign_up_bloc.dart';
 import 'Bloc/verification_bloc.dart';
 import 'View/Page/first_page.dart';
+import 'View/Page/login_page.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -78,6 +79,8 @@ class CirfApp extends StatelessWidget {
           '/pass_change': (BuildContext context) => const ChangePassPage(),
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
+          // 画面名「/login」ログイン画面
+          '/login': (BuildContext context) => const LoginPage(),
           // 画面名「/search_res」検索結果画面
           '/search_res': (BuildContext context) => const SearchResultPage(),
           // 画面名「/sign_up」サインアップページ

@@ -1,3 +1,4 @@
+import 'package:cirf_subscription_app/Service/auth_service.dart';
 import 'package:cirf_subscription_app/View/Molecule/list_card.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,8 @@ class HamburgerMenu extends StatelessWidget {
                   title: 'ログアウト',
                   onPressed: () {
                     Navigator.pop(context);
+                    AuthService.logOut();
+                    Navigator.of(context).pushNamed('/login');
                   },
                   icon: Icons.logout,
                 ),

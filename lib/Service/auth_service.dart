@@ -167,7 +167,7 @@ class AuthService {
   }
 
   // ログアウト処理
-  Future<AuthFlowStatus> logOut() async {
+  static Future<AuthFlowStatus> logOut() async {
     try {
       // ログアウトを実行
       await Amplify.Auth.signOut();
