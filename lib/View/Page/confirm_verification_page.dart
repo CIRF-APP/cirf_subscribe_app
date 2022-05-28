@@ -1,4 +1,3 @@
-import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/sign_up_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/verification_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
@@ -6,7 +5,6 @@ import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/Model/auth_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/input_form.dart';
-import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Molecule/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,22 +12,8 @@ import 'package:provider/provider.dart';
 // ログイン画面
 // TextField使用のためStatefulで記載(処理自体はBlocパターンで管理)
 // 入力した文字を入力フォームに保持するため
-class VerificationPage extends StatefulWidget {
+class VerificationPage extends StatelessWidget {
   const VerificationPage({Key? key}) : super(key: key);
-
-  @override
-  State createState() {
-    return _VerificationPageState();
-  }
-}
-
-class _VerificationPageState extends State<VerificationPage> {
-  final TextEditingController verificationController = TextEditingController();
-  String credentials = '';
-
-  // build制御のための変数
-  // TODO(you): リファクタリング(より良い方法を検討)
-  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +21,8 @@ class _VerificationPageState extends State<VerificationPage> {
     final VerificationBloc verificationBloc = Provider.of<VerificationBloc>(context);
     final double displayWidth = MediaQuery.of(context).size.width;
     final double displayHeight = MediaQuery.of(context).size.height;
+    String credentials = '';
+    bool status = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,10 +46,12 @@ class _VerificationPageState extends State<VerificationPage> {
                       // TODO(you): Android入力フォーム使用時のログ確認
                       InputForm(
                         title: '認証コード',
-                        inputFormController: verificationController,
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
+                        onChanged: (String text) {
+                          credentials = text;
+                        },
                       ),
                       const SizedBox(
                         height: 30,
@@ -120,9 +108,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                         // 遷移先判別を行うために"true"へ変更
                                         status = true;
                                         FocusScope.of(context).unfocus();
-                                        // 認証コード入力項目
-                                        final String verification = verificationController.text.trim();
-                                        verificationBloc.checkVerification.add(verification);
+                                        verificationBloc.checkVerification.add(credentials);
                                       },
                                     );
                                   } else {

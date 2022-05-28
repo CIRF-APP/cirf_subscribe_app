@@ -2,7 +2,6 @@ import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/Model/auth_model.dart';
-import 'package:cirf_subscription_app/Model/pair_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/input_form.dart';
 import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
@@ -14,21 +13,16 @@ import 'package:provider/provider.dart';
 // TextField使用のためStatefulで記載(処理自体はBlocパターンで管理)
 // 入力した文字を入力フォームに保持するため
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
-
-  // build制御のための変数
-  // TODO(you): リファクタリング(より良い方法を検討)
-  bool status = false;
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final LoginBloc loginBloc = Provider.of<LoginBloc>(context);
     final double displayWidth = MediaQuery.of(context).size.width;
     final double displayHeight = MediaQuery.of(context).size.height;
-    //final TextEditingController userIdController = TextEditingController();
-    //final TextEditingController passwordController = TextEditingController();
     String userName = '';
     String passWord = '';
+    bool status = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -55,7 +49,7 @@ class LoginPage extends StatelessWidget {
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
-                        onChange: (String text) {
+                        onChanged: (String text) {
                           userName = text;
                         },
                       ),
@@ -69,7 +63,7 @@ class LoginPage extends StatelessWidget {
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
                         isMask: true,
-                        onChange: (String text) {
+                        onChanged: (String text) {
                           passWord = text;
                         },
                       ),
@@ -100,7 +94,7 @@ class LoginPage extends StatelessWidget {
                               if (loginResult.connectionState == ConnectionState.done) {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  if (status == true) {
+                                  //if (status == true) {
                                     switch (loginResult.data) {
                                       // 認証成功
                                       case AuthFlowStatus.success:
@@ -204,7 +198,7 @@ class LoginPage extends StatelessWidget {
                                       default:
                                         break;
                                     }
-                                  }
+                                  //}
                                 });
                                 return ProgressButton(
                                   text: 'ログイン',
@@ -214,15 +208,10 @@ class LoginPage extends StatelessWidget {
                                   btnColor: HexColor('#FFA61C'),
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () async {
+                                    print('onPressed');
                                     // 遷移先判別を行うために"true"へ変更
                                     status = true;
                                     FocusScope.of(context).unfocus();
-                                    print('$userName $passWord');
-                                    // ユーザネーム欄入力項目
-                                    //final String username = userIdController.text.trim();
-                                    // パスワード欄入力項目
-                                    //final String password = passwordController.text.trim();
-                                    // 入力項目をModelに格納
                                     loginBloc.changeAuthAction.add(LoginCredentials(
                                       username: userName,
                                       password: passWord,

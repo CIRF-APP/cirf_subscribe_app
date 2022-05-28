@@ -1,6 +1,5 @@
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
-import 'package:cirf_subscription_app/View/Page/top_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'login_page.dart';
@@ -10,7 +9,6 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String environment = String.fromEnvironment('BUILD_ENV');
     final LoginBloc loginBloc = Provider.of<LoginBloc>(context);
 
     return Scaffold(
@@ -32,16 +30,16 @@ class FirstPage extends StatelessWidget {
       // セッション無：LoginPage()
       switch (sessionData.data) {
         case AuthFlowStatus.success:
-          return LoginPage(); // const TopPage();
+          return const LoginPage(); // const TopPage();
 
         case AuthFlowStatus.error:
-          return LoginPage();
+          return const LoginPage();
 
         case AuthFlowStatus.fail:
-          return LoginPage();
+          return const LoginPage();
 
         default:
-          return LoginPage();
+          return const LoginPage();
       }
     } else {
       return const Center(

@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 class InputForm extends StatelessWidget {
   const InputForm({
     required this.title,
-    this.onChange,
-    this.inputFormController,
+    required this.onChanged,
     this.titleSize = 16,
     this.titleColor = Colors.white,
     this.borderColor = Colors.black,
@@ -21,7 +20,6 @@ class InputForm extends StatelessWidget {
   });
 
   final String title;
-  final TextEditingController? inputFormController;
   final double titleSize;
   final Color titleColor;
   final Color borderColor;
@@ -30,9 +28,7 @@ class InputForm extends StatelessWidget {
   final String hintText;
   final Color hintColor;
   final double hintSize;
-
-  final void Function(String)? onChange;
-  //final void Function(String) onChange;
+  final void Function(String) onChanged;
 
   // 選択可能なキーボードタイプは以下を参照
   // https://api.flutter.dev/flutter/services/TextInputType-class.html
@@ -50,7 +46,6 @@ class InputForm extends StatelessWidget {
           weight: FontWeight.bold,
         ),
         TextField(
-          controller: inputFormController,
           obscureText: isMask,
           keyboardType: type,
           decoration: InputDecoration(
@@ -67,6 +62,7 @@ class InputForm extends StatelessWidget {
               ),
             ),
           ),
+          onChanged: onChanged,
         )
       ],
     );

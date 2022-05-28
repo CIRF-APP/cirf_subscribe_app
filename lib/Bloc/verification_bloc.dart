@@ -1,5 +1,4 @@
 import 'package:cirf_subscription_app/Common/enum_set.dart';
-import 'package:cirf_subscription_app/Model/auth_model.dart';
 import 'package:cirf_subscription_app/Service/auth_service.dart';
 import 'package:rxdart/rxdart.dart';
 

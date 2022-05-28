@@ -1,11 +1,9 @@
-import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/sign_up_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/Model/auth_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/input_form.dart';
-import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Molecule/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,30 +11,18 @@ import 'package:provider/provider.dart';
 // ログイン画面
 // TextField使用のためStatefulで記載(処理自体はBlocパターンで管理)
 // 入力した文字を入力フォームに保持するため
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
-
-  @override
-  State createState() {
-    return _SignUpState();
-  }
-}
-
-class _SignUpState extends State<SignUpPage> {
-  final TextEditingController userIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  SignUpCredentials credentials = SignUpCredentials(username: '', password: '', confirmPass: '');
-
-  // build制御のための変数
-  // TODO(you): リファクタリング(より良い方法を検討)
-  bool status = false;
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final SignUpBloc signUpBloc = Provider.of<SignUpBloc>(context);
     final double displayWidth = MediaQuery.of(context).size.width;
     final double displayHeight = MediaQuery.of(context).size.height;
+    String userName = '';
+    String passWord = '';
+    String confirmPass = '';
+    bool status = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,32 +46,38 @@ class _SignUpState extends State<SignUpPage> {
                       // TODO(you): Android入力フォーム使用時のログ確認
                       InputForm(
                         title: 'ユーザーID',
-                        inputFormController: userIdController,
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
+                        onChanged: (String text) {
+                          userName = text;
+                        },
                       ),
                       const SizedBox(
                         height: 30,
                       ),
                       InputForm(
                         title: 'パスワード',
-                        inputFormController: passwordController,
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
                         isMask: true,
+                        onChanged: (String text) {
+                          passWord = text;
+                        },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       InputForm(
                         title: 'パスワード確認',
-                        inputFormController: confirmPasswordController,
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
                         isMask: true,
+                        onChanged: (String text) {
+                          confirmPass = text;
+                        },
                       ),
                       const SizedBox(
                         height: 20,
@@ -114,13 +106,17 @@ class _SignUpState extends State<SignUpPage> {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
                                   print('WidgetBinding ${loginResult.data}');
-                                  switch(loginResult.data){
+                                  switch (loginResult.data) {
                                     case SignUpFlowStatus.success:
                                       Navigator.of(context).pushNamed('/verification');
                                       break;
 
                                     case SignUpFlowStatus.fail:
                                       print('失敗島');
+                                      break;
+
+                                    default:
+                                      print('null');
                                       break;
                                   }
                                 });
@@ -135,16 +131,11 @@ class _SignUpState extends State<SignUpPage> {
                                     // 遷移先判別を行うために"true"へ変更
                                     status = true;
                                     FocusScope.of(context).unfocus();
-                                    // ユーザネーム欄入力項目
-                                    final String username = userIdController.text.trim();
-                                    // パスワード欄入力項目
-                                    final String password = passwordController.text.trim();
-                                    // パスワード確認
-                                    final String confirmPass = confirmPasswordController.text.trim();
-                                    // 入力項目をModelに格納
-                                    credentials = SignUpCredentials(username: username, password: password, confirmPass: confirmPass);
-                                    print('Button ${credentials.username}');
-                                    signUpBloc.pushButton.add(credentials);
+                                    signUpBloc.pushButton.add(SignUpCredentials(
+                                      username: userName,
+                                      password: passWord,
+                                      confirmPass: confirmPass,
+                                    ));
                                   },
                                 );
                               } else {
