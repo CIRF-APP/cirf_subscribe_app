@@ -103,6 +103,9 @@ class _VerificationPageState extends State<VerificationPage> {
                                           case VerificationFlowStatus.fail:
                                             print('失敗してしもたわ');
                                             break;
+                                          default:
+                                            print('null');
+                                            break;
                                         }
                                       }
                                     });
