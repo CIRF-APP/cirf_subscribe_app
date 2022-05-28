@@ -22,7 +22,7 @@ class SignUpPage extends StatelessWidget {
     String userName = '';
     String passWord = '';
     String confirmPass = '';
-    bool status = false;
+    bool pushButton = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -105,19 +105,21 @@ class SignUpPage extends StatelessWidget {
                               if (loginResult.connectionState == ConnectionState.done) {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  print('WidgetBinding ${loginResult.data}');
-                                  switch (loginResult.data) {
-                                    case SignUpFlowStatus.success:
-                                      Navigator.of(context).pushNamed('/verification');
-                                      break;
+                                  if(pushButton) {
+                                    switch (loginResult.data) {
+                                      case SignUpFlowStatus.success:
+                                        Navigator.of(context).pushNamed(
+                                            '/verification');
+                                        break;
 
-                                    case SignUpFlowStatus.fail:
-                                      print('失敗島');
-                                      break;
+                                      case SignUpFlowStatus.fail:
+                                        print('失敗島');
+                                        break;
 
-                                    default:
-                                      print('null');
-                                      break;
+                                      default:
+                                        print('null');
+                                        break;
+                                    }
                                   }
                                 });
                                 return ProgressButton(
@@ -129,7 +131,7 @@ class SignUpPage extends StatelessWidget {
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () async {
                                     // 遷移先判別を行うために"true"へ変更
-                                    status = true;
+                                    pushButton = true;
                                     FocusScope.of(context).unfocus();
                                     signUpBloc.pushButton.add(SignUpCredentials(
                                       username: userName,

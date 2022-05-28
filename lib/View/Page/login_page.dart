@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
     final double displayHeight = MediaQuery.of(context).size.height;
     String userName = '';
     String passWord = '';
-    bool status = false;
+    bool pushButton = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -94,7 +94,7 @@ class LoginPage extends StatelessWidget {
                               if (loginResult.connectionState == ConnectionState.done) {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  //if (status == true) {
+                                  if (pushButton) {
                                     switch (loginResult.data) {
                                       // 認証成功
                                       case AuthFlowStatus.success:
@@ -114,7 +114,7 @@ class LoginPage extends StatelessWidget {
                                               titleText: 'ユーザーIDを入力してください。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -132,7 +132,7 @@ class LoginPage extends StatelessWidget {
                                               titleText: 'ユーザーIDまたはパスワードが間違っています。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget {
                                               titleText: 'ユーザーIDまたはパスワードが間違っています。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -168,7 +168,7 @@ class LoginPage extends StatelessWidget {
                                               titleText: '無効なユーザです。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -186,7 +186,7 @@ class LoginPage extends StatelessWidget {
                                               titleText: '時間をおいて再度ログインをお願いします。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -198,7 +198,7 @@ class LoginPage extends StatelessWidget {
                                       default:
                                         break;
                                     }
-                                  //}
+                                  }
                                 });
                                 return ProgressButton(
                                   text: 'ログイン',
@@ -210,7 +210,7 @@ class LoginPage extends StatelessWidget {
                                   onPressed: () async {
                                     print('onPressed');
                                     // 遷移先判別を行うために"true"へ変更
-                                    status = true;
+                                    pushButton = true;
                                     FocusScope.of(context).unfocus();
                                     loginBloc.changeAuthAction.add(LoginCredentials(
                                       username: userName,

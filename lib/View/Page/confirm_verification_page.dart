@@ -22,7 +22,7 @@ class VerificationPage extends StatelessWidget {
     final double displayWidth = MediaQuery.of(context).size.width;
     final double displayHeight = MediaQuery.of(context).size.height;
     String credentials = '';
-    bool status = false;
+    bool pushButton = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -81,9 +81,9 @@ class VerificationPage extends StatelessWidget {
                                 future: verificationBloc.fetchConfirmResult(userData.data?.username, verificationCode.data),
                                 builder: (BuildContext context, AsyncSnapshot<VerificationFlowStatus?> verificationResult) {
                                   if (verificationResult.connectionState == ConnectionState.done) {
-                                    // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
+                                    // Widgetの描画が完了かつpushButtonがtrueの時のみ遷移先判別
                                     WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                      if (status == true) {
+                                      if (pushButton == true) {
                                         switch (verificationResult.data) {
                                           case VerificationFlowStatus.success:
                                             Navigator.of(context).pushNamed('/top');
@@ -106,7 +106,7 @@ class VerificationPage extends StatelessWidget {
                                       textColor: HexColor('#FFFFFF'),
                                       onPressed: () async {
                                         // 遷移先判別を行うために"true"へ変更
-                                        status = true;
+                                        pushButton = true;
                                         FocusScope.of(context).unfocus();
                                         verificationBloc.checkVerification.add(credentials);
                                       },

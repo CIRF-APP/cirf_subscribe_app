@@ -20,7 +20,7 @@ class ChangePassPage extends StatelessWidget {
     final double displayHeight = MediaQuery.of(context).size.height;
     String newPass = '';
     String confirmPass = '';
-    bool status = false;
+    bool pushButton = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -90,9 +90,9 @@ class ChangePassPage extends StatelessWidget {
                             future: changePassBloc.fetchChangePassResult(passData.data),
                             builder: (BuildContext context, AsyncSnapshot<ChangePassFlowStatus?> passResult) {
                               if (passResult.connectionState == ConnectionState.done) {
-                                // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
+                                // Widgetの描画が完了かつpushButtonがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  if (status == true) {
+                                  if (pushButton == true) {
                                     switch (passResult.data) {
                                       // パスワード変更成功
                                       case ChangePassFlowStatus.success:
@@ -108,7 +108,7 @@ class ChangePassPage extends StatelessWidget {
                                               titleText: '入力されたパスワードが一致していません。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -126,7 +126,7 @@ class ChangePassPage extends StatelessWidget {
                                               titleText: '無効なパスワードです。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -144,7 +144,7 @@ class ChangePassPage extends StatelessWidget {
                                               titleText: '新しいパスワードを設定してください。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -162,7 +162,7 @@ class ChangePassPage extends StatelessWidget {
                                               titleText: '時間をおいて再度実施をお願いします。',
                                               onPressButton1: () {
                                                 // 遷移先判別を行わないために"false"へ変更
-                                                status = false;
+                                                pushButton = false;
                                                 Navigator.pop(context);
                                               },
                                               button1Text: 'OK',
@@ -198,7 +198,7 @@ class ChangePassPage extends StatelessWidget {
                                       textColor: HexColor('#FFFFFF'),
                                       onPressed: () {
                                         // 遷移先判別を行うために"true"へ変更
-                                        status = true;
+                                        pushButton = true;
                                         FocusScope.of(context).unfocus();
                                         // 入力項目をModelに格納
                                         changePassBloc.changePageAction.add(PasswordCredentials(
