@@ -43,7 +43,7 @@ class _VerificationPageState extends State<VerificationPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -98,7 +98,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                       if (status == true) {
                                         switch (verificationResult.data) {
                                           case VerificationFlowStatus.success:
-                                            Navigator.of(context).pushNamed('/top');
+                                            Navigator.of(context).pushReplacementNamed('/top');
                                             break;
                                           case VerificationFlowStatus.fail:
                                             print('失敗してしもたわ');
@@ -111,7 +111,7 @@ class _VerificationPageState extends State<VerificationPage> {
                                       textSize: 18,
                                       height: 48,
                                       width: displayWidth - 40,
-                                      btnColor: HexColor('#FFA61C'),
+                                      btnColor: HexColor('#000000'),
                                       textColor: HexColor('#FFFFFF'),
                                       onPressed: () async {
                                         // 遷移先判別を行うために"true"へ変更

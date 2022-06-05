@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUpPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -55,7 +55,7 @@ class _SignUpState extends State<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(
-                        height: 100,
+                        height: 60,
                       ),
                       // TODO(you): Android入力フォーム使用時のログ確認
                       InputForm(
@@ -88,21 +88,7 @@ class _SignUpState extends State<SignUpPage> {
                         isMask: true,
                       ),
                       const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: TextButton(
-                          // TODO(you): パスワード忘れ画面の実装
-                          onPressed: () {},
-                          child: FixedText(
-                            size: 12,
-                            text: 'パスワードをお忘れの場合',
-                            color: HexColor('#0019DB'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       StreamBuilder<SignUpCredentials>(
                         stream: signUpBloc.signUpData,
@@ -113,15 +99,18 @@ class _SignUpState extends State<SignUpPage> {
                               if (loginResult.connectionState == ConnectionState.done) {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  print('WidgetBinding ${loginResult.data}');
-                                  switch(loginResult.data){
-                                    case SignUpFlowStatus.success:
-                                      Navigator.of(context).pushNamed('/verification');
-                                      break;
+                                  if(status == true) {
+                                    switch (loginResult.data) {
+                                      case SignUpFlowStatus.success:
+                                        print('success signup');
+                                        Navigator.of(context).pushNamed('/verification');
+                                        break;
 
-                                    case SignUpFlowStatus.fail:
-                                      print('失敗島');
-                                      break;
+                                      case SignUpFlowStatus.fail:
+                                        print('失敗島');
+                                        status = false;
+                                        break;
+                                    }
                                   }
                                 });
                                 return ProgressButton(
@@ -129,9 +118,9 @@ class _SignUpState extends State<SignUpPage> {
                                   textSize: 18,
                                   height: 48,
                                   width: displayWidth - 40,
-                                  btnColor: HexColor('#FFA61C'),
+                                  btnColor: HexColor('#000000'),
                                   textColor: HexColor('#FFFFFF'),
-                                  onPressed: () async {
+                                  onPressed: () {
                                     // 遷移先判別を行うために"true"へ変更
                                     status = true;
                                     FocusScope.of(context).unfocus();
@@ -143,7 +132,6 @@ class _SignUpState extends State<SignUpPage> {
                                     final String confirmPass = confirmPasswordController.text.trim();
                                     // 入力項目をModelに格納
                                     credentials = SignUpCredentials(username: username, password: password, confirmPass: confirmPass);
-                                    print('Button ${credentials.username}');
                                     signUpBloc.pushButton.add(credentials);
                                   },
                                 );

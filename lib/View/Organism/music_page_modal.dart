@@ -18,7 +18,6 @@ class MusicPage extends StatelessWidget {
 
     return GestureDetector(
       onVerticalDragEnd: (DragEndDetails? details) {
-        print('onVerticalDragEnd');
       },
       child: Container(
         margin: const EdgeInsets.only(top: 64),

@@ -1,4 +1,3 @@
-
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -76,22 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                         isMask: true,
                       ),
                       const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/sign_up');
-                          },
-                          child: FixedText(
-                            size: 12,
-                            text: 'アカウントをお持ちで無い場合',
-                            color: HexColor('#0019DB'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       StreamBuilder<LoginCredentials>(
                         stream: loginBloc.loginStateAction,
@@ -219,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                                   textSize: 18,
                                   height: 48,
                                   width: displayWidth - 40,
-                                  btnColor: HexColor('#FFA61C'),
+                                  btnColor: HexColor('#000000'),
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () async {
                                     // 遷移先判別を行うために"true"へ変更
@@ -241,6 +225,20 @@ class _LoginPageState extends State<LoginPage> {
                               }
                             },
                           );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProgressButton(
+                        text: '新規アカウント作成',
+                        textSize: 18,
+                        height: 48,
+                        width: displayWidth - 40,
+                        btnColor: HexColor('#00BFFF'),
+                        textColor: HexColor('#FFFFFF'),
+                        onPressed: () async {
+                          Navigator.of(context).pushNamed('/sign_up');
                         },
                       ),
                     ],

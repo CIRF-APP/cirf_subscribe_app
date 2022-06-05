@@ -22,7 +22,6 @@ class SignUpBloc {
   // サインアップの結果を返す処理
   Future<SignUpFlowStatus?> fetchSignUpResult(SignUpCredentials? credentials) async {
     final AuthService service = AuthService();
-    print(credentials);
     if (credentials == null) {
       return null;
     } else {
@@ -33,7 +32,6 @@ class SignUpBloc {
   // 入力項目を渡す処理
   void sinkSignUpData() {
     inputController.listen((SignUpCredentials value) {
-      print('sinkSignUpData ${value.username}');
       sendController.sink.add(value);
     });
   }
