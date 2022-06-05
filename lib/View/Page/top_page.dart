@@ -5,6 +5,7 @@ import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/hamburger_menu.dart';
 import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
+import 'package:cirf_subscription_app/View/Organism/other_music_list.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,17 +54,21 @@ class TopPage extends StatelessWidget {
       body: StreamBuilder<void>(
         initialData: false,
         stream: audioDatabaseBloc.rebuildStream,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot){
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           return FutureBuilder<int>(
             future: audioDatabaseBloc.fetchAudioData(),
             builder: (BuildContext context, AsyncSnapshot<int> httpStatus) {
               if (httpStatus.connectionState == ConnectionState.done) {
                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                  if(httpStatus.data != 200) {
+                  if (httpStatus.data != 200) {
                     showDialog<int>(
                       context: context,
                       builder: (BuildContext context) {
-                        return IOSStyleDialog.fromModel(getBehavior(httpStatus.data, context, audioDatabaseBloc));
+                        return IOSStyleDialog.fromModel(getBehavior(
+                          httpStatus.data,
+                          context,
+                          audioDatabaseBloc,
+                        ));
                       },
                     );
                   }
@@ -80,7 +85,7 @@ class TopPage extends StatelessWidget {
                         const SizedBox(height: 30),
                         const ScrollList(title: 'おすすめ'),
                         const SizedBox(height: 30),
-                        const ScrollList(title: 'その他'),
+                        const OtherMusicList(),
                       ],
                     ),
                   ),

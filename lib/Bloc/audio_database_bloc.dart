@@ -1,5 +1,6 @@
 import 'package:cirf_subscription_app/Bloc/api_rebuild_bloc.dart';
 import 'package:cirf_subscription_app/Common/api_exception.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
 import 'package:cirf_subscription_app/Model/search_result_model.dart';
 import 'package:cirf_subscription_app/Service/audio_database_service.dart';
 import 'package:rxdart/rxdart.dart';
@@ -40,12 +41,18 @@ class AudioDatabaseBloc extends APIRebuildBloc {
 
   Stream<SearchResultModel> get searchResult => _searchResultController.stream;
 
+  // 出力(全音楽)
+  final BehaviorSubject<List<MusicModel>> _allMusicController = BehaviorSubject<List<MusicModel>>();
+
+  Stream<List<MusicModel>> get allMusic => _allMusicController.stream;
+
   final AudioDatabaseService service = AudioDatabaseService();
 
   Future<int> fetchAudioData() async {
     int httpStatus = 200;
     try {
       await service.loadAudioData();
+      _allMusicController.sink.add(service.getAllMusic());
     } on ApiException catch(e) {
       httpStatus = e.httpStatus;
     }

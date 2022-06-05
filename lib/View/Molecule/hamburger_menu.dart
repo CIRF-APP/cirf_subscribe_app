@@ -37,7 +37,7 @@ class HamburgerMenu extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     AuthService.logOut();
-                    Navigator.of(context).pushNamed('/login');
+                    Navigator.of(context).pushReplacementNamed('/login');
                   },
                   icon: Icons.logout,
                 ),

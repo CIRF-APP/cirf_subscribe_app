@@ -33,4 +33,8 @@ class AudioDatabaseService {
     }
     return result;
   }
+
+  List<MusicModel> getAllMusic() {
+    return musicDatabase;
+  }
 }
