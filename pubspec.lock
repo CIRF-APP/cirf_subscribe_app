@@ -8,6 +8,83 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "36.0.0"
+  amplify_analytics_plugin_interface:
+    dependency: transitive
+    description:
+      name: amplify_analytics_plugin_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_api_plugin_interface:
+    dependency: transitive
+    description:
+      name: amplify_api_plugin_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_auth_cognito:
+    dependency: "direct main"
+    description:
+      name: amplify_auth_cognito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_auth_cognito_android:
+    dependency: transitive
+    description:
+      name: amplify_auth_cognito_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_auth_cognito_ios:
+    dependency: transitive
+    description:
+      name: amplify_auth_cognito_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_auth_plugin_interface:
+    dependency: transitive
+    description:
+      name: amplify_auth_plugin_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_authenticator:
+    dependency: "direct main"
+    description:
+      name: amplify_authenticator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  amplify_core:
+    dependency: transitive
+    description:
+      name: amplify_core
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_datastore_plugin_interface:
+    dependency: transitive
+    description:
+      name: amplify_datastore_plugin_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_flutter:
+    dependency: "direct main"
+    description:
+      name: amplify_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
+  amplify_storage_plugin_interface:
+    dependency: transitive
+    description:
+      name: amplify_storage_plugin_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.5"
   analyzer:
     dependency: transitive
     description:
@@ -28,7 +105,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.2"
+    version: "2.8.1"
   audio_session:
     dependency: transitive
     description:
@@ -119,7 +196,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.1.0"
   charcode:
     dependency: transitive
     description:
@@ -190,6 +267,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
+  date_time_format:
+    dependency: transitive
+    description:
+      name: date_time_format
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   dotted_line:
     dependency: "direct main"
     description:
@@ -227,6 +311,11 @@ packages:
     version: "1.0.0"
   flutter:
     dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_localizations:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -344,7 +433,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.5.0"
   just_audio:
     dependency: "direct main"
     description:
@@ -379,7 +468,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.11"
+    version: "0.12.10"
   meta:
     dependency: transitive
     description:
@@ -601,7 +690,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.2"
   timing:
     dependency: transitive
     description:
@@ -671,7 +760,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.0"
   video_player:
     dependency: "direct main"
     description:

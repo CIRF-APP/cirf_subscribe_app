@@ -7,26 +7,26 @@ import 'package:flutter/material.dart';
 // アイコンとテキストを並べて表示するためのウィジェット
 // 必須要素：タイトルテキスト、メッセージテキスト、ボタン1タップ時の動作、ボタン1の名前、ボタン2タップ時の動作、ボタン2の名前
 // 任意要素：タイトルテキストのサイズ,ウェイト,色、メッセージテキストのサイズ,ウェイト,色、ボタンのテキストの色
-class ExceptionDialog extends StatelessWidget {
-  const ExceptionDialog({
+class IOSStyleDialog extends StatelessWidget {
+  const IOSStyleDialog({
     required this.titleText,
     this.titleTextSize = 18,
     this.titleTextWeight = FontWeight.bold,
     this.titleTextColor = Colors.black,
-    required this.messageText,
+    this.messageText = '',
     this.messageTextSize = 15,
     this.messageTextWeight = FontWeight.normal,
     this.messageTextColor = Colors.black,
     required this.onPressButton1,
     required this.button1Text,
-    required this.onPressButton2,
-    required this.button2Text,
+    this.onPressButton2,
+    this.button2Text = '',
     this.leftTextColor = Colors.blue,
     this.rightTextColor = Colors.blue,
   });
 
-  factory ExceptionDialog.fromModel(ExceptionBehaviorModel model) {
-    return ExceptionDialog(
+  factory IOSStyleDialog.fromModel(ExceptionBehaviorModel model) {
+    return IOSStyleDialog(
       titleText: model.title,
       messageText: model.message,
       onPressButton1: model.button1Tap,

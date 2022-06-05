@@ -3,8 +3,8 @@ import 'package:cirf_subscription_app/Common/exception_behavior.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
-import 'package:cirf_subscription_app/View/Molecule/exception_dialog.dart';
 import 'package:cirf_subscription_app/View/Molecule/hamburger_menu.dart';
+import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +63,7 @@ class TopPage extends StatelessWidget {
                     showDialog<int>(
                       context: context,
                       builder: (BuildContext context) {
-                        return ExceptionDialog.fromModel(getBehavior(httpStatus.data, context, audioDatabaseBloc));
+                        return IOSStyleDialog.fromModel(getBehavior(httpStatus.data, context, audioDatabaseBloc));
                       },
                     );
                   }
