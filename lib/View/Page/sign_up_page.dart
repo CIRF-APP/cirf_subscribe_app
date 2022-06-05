@@ -29,7 +29,7 @@ class SignUpPage extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -50,6 +50,7 @@ class SignUpPage extends StatelessWidget {
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
                         onChanged: (String text) {
+                          print(text);
                           userName = text;
                         },
                       ),
@@ -63,6 +64,8 @@ class SignUpPage extends StatelessWidget {
                         focusColor: HexColor('#FEA628'),
                         isMask: true,
                         onChanged: (String text) {
+                          print(text);
+                          print(userName);
                           passWord = text;
                         },
                       ),
@@ -80,21 +83,7 @@ class SignUpPage extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: TextButton(
-                          // TODO(you): パスワード忘れ画面の実装
-                          onPressed: () {},
-                          child: FixedText(
-                            size: 12,
-                            text: 'パスワードをお忘れの場合',
-                            color: HexColor('#0019DB'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       StreamBuilder<SignUpCredentials>(
                         stream: signUpBloc.signUpData,
@@ -108,8 +97,7 @@ class SignUpPage extends StatelessWidget {
                                   if(pushButton) {
                                     switch (loginResult.data) {
                                       case SignUpFlowStatus.success:
-                                        Navigator.of(context).pushNamed(
-                                            '/verification');
+                                        Navigator.of(context).pushNamed('/verification');
                                         break;
 
                                       case SignUpFlowStatus.fail:
@@ -127,9 +115,11 @@ class SignUpPage extends StatelessWidget {
                                   textSize: 18,
                                   height: 48,
                                   width: displayWidth - 40,
-                                  btnColor: HexColor('#FFA61C'),
+                                  btnColor: HexColor('#000000'),
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () async {
+                                    print('onPressed $userName $passWord $confirmPass');
+
                                     // 遷移先判別を行うために"true"へ変更
                                     pushButton = true;
                                     FocusScope.of(context).unfocus();

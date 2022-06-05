@@ -29,7 +29,7 @@ class VerificationPage extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -102,7 +102,7 @@ class VerificationPage extends StatelessWidget {
                                       textSize: 18,
                                       height: 48,
                                       width: displayWidth - 40,
-                                      btnColor: HexColor('#FFA61C'),
+                                      btnColor: HexColor('#000000'),
                                       textColor: HexColor('#FFFFFF'),
                                       onPressed: () async {
                                         // 遷移先判別を行うために"true"へ変更

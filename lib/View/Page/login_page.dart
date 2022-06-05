@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
-          color: HexColor('#FFF0D8'),
+          color: HexColor('#FFFFFF'),
           height: displayHeight,
           child: Container(
             margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -44,8 +44,7 @@ class LoginPage extends StatelessWidget {
                         height: 100,
                       ),
                       InputForm(
-                        title: 'ユーザーID',
-                        //inputFormController: userIdController,
+                        title: 'ユーザー名',
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
@@ -58,7 +57,6 @@ class LoginPage extends StatelessWidget {
                       ),
                       InputForm(
                         title: 'パスワード',
-                        //inputFormController: passwordController,
                         titleColor: HexColor('#815454'),
                         borderColor: HexColor('#8154544D'),
                         focusColor: HexColor('#FEA628'),
@@ -68,22 +66,7 @@ class LoginPage extends StatelessWidget {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/sign_up');
-                          },
-                          child: FixedText(
-                            size: 12,
-                            text: 'アカウントをお持ちで無い場合',
-                            color: HexColor('#0019DB'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       StreamBuilder<LoginCredentials>(
                         stream: loginBloc.loginStateAction,
@@ -95,6 +78,7 @@ class LoginPage extends StatelessWidget {
                                 // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
                                   if (pushButton) {
+                                    print(loginResult.data);
                                     switch (loginResult.data) {
                                       // 認証成功
                                       case AuthFlowStatus.success:
@@ -205,10 +189,9 @@ class LoginPage extends StatelessWidget {
                                   textSize: 18,
                                   height: 48,
                                   width: displayWidth - 40,
-                                  btnColor: HexColor('#FFA61C'),
+                                  btnColor: HexColor('#000000'),
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () async {
-                                    print('onPressed');
                                     // 遷移先判別を行うために"true"へ変更
                                     pushButton = true;
                                     FocusScope.of(context).unfocus();
@@ -225,6 +208,20 @@ class LoginPage extends StatelessWidget {
                               }
                             },
                           );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ProgressButton(
+                        text: '新規アカウント作成',
+                        textSize: 18,
+                        height: 48,
+                        width: displayWidth - 40,
+                        btnColor: HexColor('#00BFFF'),
+                        textColor: HexColor('#FFFFFF'),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/sign_up');
                         },
                       ),
                     ],

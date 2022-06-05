@@ -116,6 +116,7 @@ class AuthService {
   Future<SignUpFlowStatus> createAccount(SignUpCredentials model) async {
     try {
       if (model.password == model.confirmPass) {
+        //print('${model.username} ${model.password}');
         await Amplify.Auth.signUp(
           username: model.username,
           password: model.password,
