@@ -3,7 +3,6 @@ import 'package:cirf_subscription_app/Common/exception_behavior.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
-import 'package:cirf_subscription_app/View/Molecule/hamburger_menu.dart';
 import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Organism/other_music_list.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
@@ -16,11 +15,8 @@ class TopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
-    // ハンバーガーメニューを閉じるため、Scaffoldにキーを設定しておく
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: const FixedText(
           text: 'CIRF',
@@ -29,15 +25,6 @@ class TopPage extends StatelessWidget {
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
-          icon: SimpleIcon(
-            icon: Icons.menu,
-            color: HexColor('#000000'),
-          ),
-        ),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -50,7 +37,6 @@ class TopPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const HamburgerMenu(),
       body: StreamBuilder<void>(
         initialData: false,
         stream: audioDatabaseBloc.rebuildStream,
@@ -81,8 +67,6 @@ class TopPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const ScrollList(title: '再生中'),
-                        const SizedBox(height: 30),
                         const ScrollList(title: 'おすすめ'),
                         const SizedBox(height: 30),
                         const OtherMusicList(),
