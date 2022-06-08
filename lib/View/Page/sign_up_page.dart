@@ -1,11 +1,8 @@
-import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/sign_up_bloc.dart';
 import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/Model/auth_model.dart';
-import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/input_form.dart';
-import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Molecule/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +27,7 @@ class _SignUpState extends State<SignUpPage> {
 
   // build制御のための変数
   // TODO(you): リファクタリング(より良い方法を検討)
-  bool status = false;
+  bool pushButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +94,9 @@ class _SignUpState extends State<SignUpPage> {
                             future: signUpBloc.fetchSignUpResult(userData.data),
                             builder: (BuildContext context, AsyncSnapshot<SignUpFlowStatus?> loginResult) {
                               if (loginResult.connectionState == ConnectionState.done) {
-                                // Widgetの描画が完了かつstatusがtrueの時のみ遷移先判別
+                                // Widgetの描画が完了かつpushButtonがtrueの時のみ遷移先判別
                                 WidgetsBinding.instance!.addPostFrameCallback((_) {
-                                  if(status == true) {
+                                  if(pushButton == true) {
                                     switch (loginResult.data) {
                                       case SignUpFlowStatus.success:
                                         print('success signup');
@@ -107,9 +104,11 @@ class _SignUpState extends State<SignUpPage> {
                                         break;
 
                                       case SignUpFlowStatus.fail:
-                                        print('失敗島');
-                                        status = false;
+                                        print('アカウント作成で失敗');
+                                        pushButton = false;
                                         break;
+
+                                      default:
                                     }
                                   }
                                 });
@@ -122,7 +121,7 @@ class _SignUpState extends State<SignUpPage> {
                                   textColor: HexColor('#FFFFFF'),
                                   onPressed: () {
                                     // 遷移先判別を行うために"true"へ変更
-                                    status = true;
+                                    pushButton = true;
                                     FocusScope.of(context).unfocus();
                                     // ユーザネーム欄入力項目
                                     final String username = userIdController.text.trim();

@@ -10,7 +10,6 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String environment = String.fromEnvironment('BUILD_ENV');
     final LoginBloc loginBloc = Provider.of<LoginBloc>(context);
 
     return Scaffold(
