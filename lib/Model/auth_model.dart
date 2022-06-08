@@ -33,3 +33,16 @@ class SignUpCredentials {
   final String password;
   final String confirmPass;
 }
+
+// パスワード変更用
+class PassChangeCredentials {
+  PassChangeCredentials({
+    required this.oldPass,
+    required this.newPass,
+    required this.confirmPass,
+  });
+
+  final String oldPass;
+  final String newPass;
+  final String confirmPass;
+}

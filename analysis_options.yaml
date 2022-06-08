@@ -122,7 +122,7 @@ linter:
     # - invariant_booleans # too many false positives: https://github.com/dart-lang/linter/issues/811
     - iterable_contains_unrelated_type
     # - join_return_with_assignment # not required by flutter style
-    - leading_newlines_in_multiline_strings
+    # - leading_newlines_in_multiline_strings
     - library_names
     - library_prefixes
     # - library_private_types_in_public_api

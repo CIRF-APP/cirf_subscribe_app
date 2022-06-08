@@ -110,7 +110,7 @@ class AuthService {
         }
       }
     } on Exception catch (e) {
-      // print(e.toString());
+      print(e.toString());
       return AuthFlowStatus.error;
     }
   }
@@ -139,8 +139,8 @@ class AuthService {
     }
   }
 
-  Future<VerificationFlowStatus> confirmAccount(
-      SignUpCredentials userData, String confirmCode) async {
+  // 認証コード確認
+  Future<VerificationFlowStatus> confirmAccount(SignUpCredentials userData, String confirmCode) async {
     try {
       await Amplify.Auth.confirmSignUp(
         username: userData.username,
@@ -152,25 +152,42 @@ class AuthService {
       print('confirmAccount ${authError.message}');
       return VerificationFlowStatus.fail;
     }
-    /*
-    try {
-      final SignInResult result = await Amplify.Auth.signIn(
-        username: userData.username,
-        password: userData.password,
-      );
+  }
 
-      print(result.isSignedIn);
-    } on AmplifyException catch (authError) {
-      print('confirmAccount ${authError.message}');
-      return VerificationFlowStatus.fail;
-    }*/
+  Future<ChangePassFlowStatus> changePassword(PassChangeCredentials credentials) async {
+    if(Platform.isIOS) {
+      try {
+        if (credentials.newPass == credentials.confirmPass) {
+          await Amplify.Auth.updatePassword(
+            oldPassword: credentials.oldPass,
+            newPassword: credentials.newPass,
+          );
+          return ChangePassFlowStatus.success;
+        } else {
+          return ChangePassFlowStatus.fail;
+        }
+      } on AmplifyException catch (authError) {
+        print('changePassword ${authError.message}');
+        return ChangePassFlowStatus.fail;
+      }
+    } else {
+      if (credentials.newPass == credentials.confirmPass) {
+        await Amplify.Auth.updatePassword(
+          oldPassword: credentials.oldPass,
+          newPassword: credentials.newPass,
+        );
+        return ChangePassFlowStatus.success;
+      } else {
+        return ChangePassFlowStatus.fail;
+      }
+    }
   }
 
   // ログアウト処理
   static Future<AuthFlowStatus> logOut() async {
     try {
       // ログアウトを実行
-      await Amplify.Auth.signOut();
+      await Amplify.Auth.signOut(options: const SignOutOptions(globalSignOut: true));
       // ログイン画面に遷移
       return AuthFlowStatus.error;
     } on AuthException catch (authError) {
@@ -181,8 +198,7 @@ class AuthService {
   }
 
   // パスワード変更
-  Future<ChangePassFlowStatus> changeFirstPass(
-      PasswordCredentials model) async {
+  Future<ChangePassFlowStatus> changeFirstPass(PasswordCredentials model) async {
     try {
       // TODO(you): セッション内にログイン情報を格納する
       if (model.newPass == model.confirmPass) {

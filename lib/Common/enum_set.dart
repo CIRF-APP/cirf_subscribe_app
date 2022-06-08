@@ -24,3 +24,4 @@ enum ChangePassFlowStatus { success, fail, reg_error, input_error, error }
 enum SignUpFlowStatus {success, fail}
 
 enum VerificationFlowStatus {success, fail}
+

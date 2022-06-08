@@ -4,7 +4,7 @@ import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/confirm_password_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/login_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
-import 'package:cirf_subscription_app/View/Page/change_pass_page.dart';
+import 'package:cirf_subscription_app/View/Page/confirm_pass_page.dart';
 import 'package:cirf_subscription_app/View/Page/confirm_verification_page.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/sign_up_page.dart';
@@ -15,8 +15,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import 'Bloc/change_pass_bloc.dart';
 import 'Bloc/sign_up_bloc.dart';
 import 'Bloc/verification_bloc.dart';
+import 'View/Page/change_pass_page.dart';
 import 'View/Page/first_page.dart';
 import 'View/Page/login_page.dart';
 
@@ -70,13 +72,18 @@ class CirfApp extends StatelessWidget {
           create: (BuildContext context) => VerificationBloc(),
           dispose: (BuildContext context, VerificationBloc bloc) => bloc.dispose(),
         ),
+        Provider<ChangePasswordBloc>(
+          create: (BuildContext context) => ChangePasswordBloc(),
+          dispose: (BuildContext context, ChangePasswordBloc bloc) => bloc.dispose(),
+        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         // 画面遷移用
         routes: <String, WidgetBuilder>{
-          // 画面名「/pass_change」
-          '/pass_change': (BuildContext context) => const ChangePassPage(),
+          // 画面名「/confirm_pass」パスワード強制変更画面
+          '/confirm_pass': (BuildContext context) => const ConfirmPassPage(),
           // 画面名「/top」トップ画面
           '/top': (BuildContext context) => const TopPage(),
           // 画面名「/login」ログイン画面
@@ -87,6 +94,8 @@ class CirfApp extends StatelessWidget {
           '/sign_up': (BuildContext context) => const SignUpPage(),
           // 画面名「/verification」サインアップページ
           '/verification': (BuildContext context) => const VerificationPage(),
+          // 画面名「/pass_change」
+          '/pass_change': (BuildContext context) => const ChangePassPage(),
         },
         // Blocパターン用
         home: const FirstPage(),

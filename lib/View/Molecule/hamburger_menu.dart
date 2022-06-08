@@ -26,9 +26,10 @@ class HamburgerMenu extends StatelessWidget {
                   icon: Icons.menu,
                 ),
                 ListCard(
-                  title: '設定',
+                  title: 'パスワード変更',
                   onPressed: () {
                     Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/pass_change');
                   },
                   icon: Icons.settings,
                 ),
