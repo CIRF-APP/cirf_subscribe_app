@@ -4,6 +4,7 @@ import 'package:cirf_subscription_app/Common/hex_color.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
+import 'package:cirf_subscription_app/View/Organism/ad_widget.dart';
 import 'package:cirf_subscription_app/View/Organism/other_music_list.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ class TopPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        const AdsBannerWidget(),
                         const ScrollList(title: 'おすすめ'),
                         const SizedBox(height: 30),
                         const OtherMusicList(),

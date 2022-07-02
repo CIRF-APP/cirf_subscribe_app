@@ -1,31 +1,23 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/View/Page/search_result_page.dart';
 import 'package:cirf_subscription_app/View/Page/top_page.dart';
-import 'package:cirf_subscription_app/amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'Common/ad_state.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final Future<InitializationStatus> initFuture = MobileAds.instance.initialize();
+  final AdState adState = AdState(initFuture);
   await Hive.initFlutter();
-  await configureAmplify();
-  runApp(const CirfApp());
-}
-
-Future<void> configureAmplify() async {
-  final AmplifyClass amplify = Amplify;
-  try {
-    await amplify.addPlugins(<AmplifyPluginInterface>[
-      AmplifyAuthCognito(),
-    ]);
-    await amplify.configure(amplifyconfig);
-  } catch(e){
-    print(e.toString());
-  }
+  runApp(Provider<AdState>.value(
+    value: adState,
+    builder: (BuildContext context, Widget? child) => const CirfApp(),
+  ));
 }
 
 class CirfApp extends StatelessWidget {
