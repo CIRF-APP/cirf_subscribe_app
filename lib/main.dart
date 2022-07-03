@@ -7,17 +7,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'Common/ad_state.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final Future<InitializationStatus> initFuture = MobileAds.instance.initialize();
-  final AdState adState = AdState(initFuture);
+  await MobileAds.instance.initialize();
   await Hive.initFlutter();
-  runApp(Provider<AdState>.value(
-    value: adState,
-    builder: (BuildContext context, Widget? child) => const CirfApp(),
-  ));
+  runApp(const CirfApp());
 }
 
 class CirfApp extends StatelessWidget {

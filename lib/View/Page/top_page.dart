@@ -68,7 +68,6 @@ class TopPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const AdsBannerWidget(),
                         const ScrollList(title: 'おすすめ'),
                         const SizedBox(height: 30),
                         const OtherMusicList(),
@@ -85,6 +84,7 @@ class TopPage extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: const AdsBannerWidget(),
     );
   }
 }
