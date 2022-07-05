@@ -21,6 +21,12 @@ class _SeekBar extends State<MusicSeekBar> {
   double cursorPos = 0;
 
   @override
+  void initState() {
+    super.initState();
+    cursorPos = 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final MusicControlBloc musicBloc = Provider.of<MusicControlBloc>(context);
 
@@ -29,6 +35,7 @@ class _SeekBar extends State<MusicSeekBar> {
       stream: widget.audioFile.getPosition(),
       builder: (BuildContext context, AsyncSnapshot<Duration> nowPosition) {
         cursorPos = nowPosition.data!.inSeconds.toDouble() / widget.audioFile.getTotalSecond().toDouble();
+        cursorPos = cursorPos.isNaN ? 0 : cursorPos;
         return Slider(
           value: cursorPos,
           onChanged: (double v) {

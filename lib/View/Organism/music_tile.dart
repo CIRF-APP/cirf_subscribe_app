@@ -44,16 +44,18 @@ class _MusicTileState extends State<MusicTile> {
         alignment: Alignment.center,
       ),
       onPressed: () {
-        adsInterstitial.show((){
-          bloc.setMusicData.add(widget.musicData);
-          showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return MusicPage(musicData: widget.musicData);
-            },
-          );
+        bloc.setMusicData.add(widget.musicData);
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext context) {
+            return MusicPage(musicData: widget.musicData);
+          },
+        );
+
+        adsInterstitial.show(() async {
+          await bloc.playFromCard();
         });
       },
       child: Row(

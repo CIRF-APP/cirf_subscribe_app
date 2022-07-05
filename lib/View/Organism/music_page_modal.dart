@@ -17,8 +17,7 @@ class MusicPage extends StatelessWidget {
     final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
     return GestureDetector(
-      onVerticalDragEnd: (DragEndDetails? details) {
-      },
+      onVerticalDragEnd: (DragEndDetails? details) {},
       child: Container(
         margin: const EdgeInsets.only(top: 64),
         decoration: const BoxDecoration(
@@ -30,30 +29,19 @@ class MusicPage extends StatelessWidget {
         ),
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          child: FutureBuilder<void>(
-            future: bloc.playFromCard(),
-            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Image.network(musicData.imageFile),
-                    FixedText(
-                      text: musicData.audioName,
-                      size: 24,
-                      weight: FontWeight.bold,
-                    ),
-                    MusicControlArea(
-                      musicData: musicData,
-                    ),
-                  ],
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Image.network(musicData.imageFile),
+              FixedText(
+                text: musicData.audioName,
+                size: 24,
+                weight: FontWeight.bold,
+              ),
+              MusicControlArea(
+                musicData: musicData,
+              ),
+            ],
           ),
         ),
       ),

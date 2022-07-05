@@ -36,19 +36,21 @@ class _MusicCardState extends State<MusicCard> {
       height: 240,
       child: ElevatedButton(
         onPressed: () {
-          adsInterstitial.show((){
-            bloc.setMusicData.add(widget.musicData);
-            showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              isScrollControlled: true,
-              enableDrag: false,
-              context: context,
-              builder: (BuildContext context) {
-                return MusicPage(musicData: widget.musicData);
-              },
-            );
-          });
+          bloc.setMusicData.add(widget.musicData);
+          showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            isScrollControlled: true,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return MusicPage(musicData: widget.musicData);
+            },
+          );
 
+          adsInterstitial.show(() async {
+            // bloc.pushButton.add(!bloc.targetAudio.isPlay());
+            await bloc.playFromCard();
+          });
         },
         child: SizedBox(
           width: 275,
