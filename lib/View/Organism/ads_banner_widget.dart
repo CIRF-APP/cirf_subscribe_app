@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -6,11 +7,11 @@ class AdsBannerWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _AdWidgetState();
+    return _BannerWidgetState();
   }
 }
 
-class _AdWidgetState extends State<AdsBannerWidget> {
+class _BannerWidgetState extends State<AdsBannerWidget> {
   late BannerAd bannerAd;
   bool isAdLoaded = false;
 
@@ -19,7 +20,7 @@ class _AdWidgetState extends State<AdsBannerWidget> {
     super.initState();
 
     bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', //Platform.isAndroid ? 'ca-app-pub-6605960894275308/9637723196' : 'ca-app-pub-6605960894275308/2046462616',
+      adUnitId: Platform.isAndroid ? 'ca-app-pub-3940256099942544/6300978111' : 'ca-app-pub-3940256099942544/2934735716', //Platform.isAndroid ? 'ca-app-pub-6605960894275308/9637723196' : 'ca-app-pub-6605960894275308/2046462616',
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
