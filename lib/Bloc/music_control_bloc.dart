@@ -1,5 +1,7 @@
 import 'package:cirf_subscription_app/Common/audio_file.dart';
+import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Model/music_status_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MusicControlBloc {
@@ -9,6 +11,9 @@ class MusicControlBloc {
     });
     _setMusicController.listen((MusicModel model) {
       targetData = model;
+    });
+    _musicPageController.listen((MusicStatusModel status) {
+      _musicStatusController.sink.add(status);
     });
     getNowTime();
   }
@@ -22,6 +27,16 @@ class MusicControlBloc {
   final BehaviorSubject<bool> _buttonController = BehaviorSubject<bool>();
 
   Sink<bool> get pushButton => _buttonController.sink;
+
+  // 入力(音声ページの状態)
+  final BehaviorSubject<MusicStatusModel> _musicPageController = BehaviorSubject<MusicStatusModel>();
+
+  Sink<MusicStatusModel> get tapMusic => _musicPageController.sink;
+
+  // 出力(音声ページの状態)
+  final BehaviorSubject<MusicStatusModel> _musicStatusController = BehaviorSubject<MusicStatusModel>();
+
+  Stream<MusicStatusModel> get musicPage => _musicStatusController.stream;
 
   // 出力(音声の再生状態)
   final BehaviorSubject<bool> _statusController = BehaviorSubject<bool>();
@@ -59,6 +74,11 @@ class MusicControlBloc {
 
   Future<void> playFromButton() async {
     targetAudio.isPlay() ? await targetAudio.audioPause() : await targetAudio.audioPlay();
+  }
+
+  Future<void> stopMusic() async {
+    await targetAudio.audioStop();
+    await targetAudio.close();
   }
 
   void dispose() {

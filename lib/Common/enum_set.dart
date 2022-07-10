@@ -1,12 +1,3 @@
-// 生体認証のタイプ(BioMetricsLoginBlocなどで使用)
-enum BioType { IOS_FACE, IOS_FINGER, ANDROID_FACE, ANDROID_FINGER, NOTHING }
-
-// ログイン設定画面のラジオボタンの種類(SettingRadioButtonBlocなどで使用)
-enum RadioValue { ID_PASS, PASS, AUTO, PASSCODE }
-
-// ユーザー情報確認画面の押されたボタンのタイプ(EditNicknameBlocなどで使用)
-enum PressedButtonType { EDIT_ICON, SAVE_BUTTON }
-
 /*
 success：成功：sessionにログイン情報格納
 fail：初期パスワード変更要求など
@@ -24,4 +15,6 @@ enum ChangePassFlowStatus { success, fail, reg_error, input_error, error }
 enum SignUpFlowStatus {success, fail}
 
 enum VerificationFlowStatus {success, fail}
+
+enum MusicPageStatus { disabled, modal, smallest }
 

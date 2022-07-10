@@ -1,12 +1,17 @@
 import 'package:cirf_subscription_app/Bloc/audio_database_bloc.dart';
+import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
+import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Common/exception_behavior.dart';
 import 'package:cirf_subscription_app/Common/hex_color.dart';
+import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Model/music_status_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Atom/simple_icon.dart';
 import 'package:cirf_subscription_app/View/Molecule/ios_style_dialog.dart';
 import 'package:cirf_subscription_app/View/Organism/ads_banner_widget.dart';
 import 'package:cirf_subscription_app/View/Organism/other_music_list.dart';
 import 'package:cirf_subscription_app/View/Organism/scroll_list.dart';
+import 'package:cirf_subscription_app/View/Organism/smallest_music.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +21,7 @@ class TopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc audioDatabaseBloc = Provider.of<AudioDatabaseBloc>(context);
+    final MusicControlBloc musicControlBloc = Provider.of<MusicControlBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,6 +91,17 @@ class TopPage extends StatelessWidget {
         },
       ),
       bottomNavigationBar: const AdsBannerWidget(),
+      bottomSheet: StreamBuilder<MusicStatusModel>(
+        initialData: MusicStatusModel(
+          status: MusicPageStatus.disabled,
+          model: MusicModel.emptyModel(),
+        ),
+        stream: musicControlBloc.musicPage,
+        builder: (BuildContext context, AsyncSnapshot<MusicStatusModel> musicStatus) {
+          print(musicStatus.data?.status);
+          return musicStatus.data?.status == MusicPageStatus.smallest ? SmallestMusic(musicData: musicStatus.data?.model ?? MusicModel.emptyModel()) : Container(height: 0);
+        },
+      ),
     );
   }
 }

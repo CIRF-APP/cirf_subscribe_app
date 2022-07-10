@@ -1,5 +1,7 @@
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
+import 'package:cirf_subscription_app/Common/enum_set.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/Model/music_status_model.dart';
 import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Molecule/music_control_area.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,16 @@ class MusicPage extends StatelessWidget {
     final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
     return GestureDetector(
-      onVerticalDragEnd: (DragEndDetails? details) {},
+      onVerticalDragEnd: (DragEndDetails? details) {
+        // 3000くらい？
+        if ((details?.primaryVelocity ?? 0) > 3000) {
+          bloc.tapMusic.add(MusicStatusModel(
+            status: MusicPageStatus.smallest,
+            model: musicData,
+          ));
+          Navigator.of(context).pop();
+        }
+      },
       child: Container(
         margin: const EdgeInsets.only(top: 64),
         decoration: const BoxDecoration(

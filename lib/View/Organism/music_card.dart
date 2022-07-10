@@ -48,7 +48,6 @@ class _MusicCardState extends State<MusicCard> {
           );
 
           adsInterstitial.show(() async {
-            // bloc.pushButton.add(!bloc.targetAudio.isPlay());
             await bloc.playFromCard();
           });
         },
