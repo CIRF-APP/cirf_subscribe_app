@@ -28,18 +28,18 @@ class TopPage extends StatelessWidget {
         title: const FixedText(
           text: 'CIRF',
           size: 20,
-          color: Colors.black,
+          color: Colors.white,
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black54,
         actions: <Widget>[
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed('/search_res');
             },
-            icon: SimpleIcon(
+            icon: const SimpleIcon(
               icon: Icons.search,
-              color: HexColor('#000000'),
+              color: Colors.white,
             ),
           ),
         ],
@@ -68,6 +68,7 @@ class TopPage extends StatelessWidget {
                 });
 
                 return Container(
+                  color: Colors.black,
                   padding: const EdgeInsets.all(20),
                   child: SingleChildScrollView(
                     child: Column(
@@ -76,7 +77,6 @@ class TopPage extends StatelessWidget {
                       children: <Widget>[
                         const ScrollList(title: 'おすすめ'),
                         const SizedBox(height: 30),
-                        const OtherMusicList(),
                       ],
                     ),
                   ),
@@ -90,7 +90,7 @@ class TopPage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: const AdsBannerWidget(),
+      //bottomNavigationBar: const AdsBannerWidget(),
       bottomSheet: StreamBuilder<MusicStatusModel>(
         initialData: MusicStatusModel(
           status: MusicPageStatus.disabled,

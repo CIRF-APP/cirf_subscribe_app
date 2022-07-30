@@ -14,11 +14,13 @@ class ScrollList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AudioDatabaseBloc bloc = Provider.of<AudioDatabaseBloc>(context);
-    final List<MusicCard> musicList = <MusicCard>[];
+    final List<Widget> musicList = <Widget>[];
 
-    if(bloc.service.musicDatabase.isNotEmpty){
+    if (bloc.service.musicDatabase.isNotEmpty) {
       musicList.add(MusicCard(musicData: bloc.service.musicDatabase[25]));
+      musicList.add(const SizedBox(width: 30));
       musicList.add(MusicCard(musicData: bloc.service.musicDatabase[26]));
+      musicList.add(const SizedBox(width: 30));
       musicList.add(MusicCard(musicData: bloc.service.musicDatabase[27]));
     }
 
@@ -28,6 +30,7 @@ class ScrollList extends StatelessWidget {
         FixedText(
           text: title,
           size: 24,
+          color: Colors.white,
           weight: FontWeight.bold,
         ),
         const SizedBox(
@@ -37,12 +40,9 @@ class ScrollList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 5, right: 5),
           scrollDirection: Axis.horizontal,
           controller: ScrollController(),
-          child: SizedBox(
-            width: 900,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: musicList,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: musicList,
           ),
         ),
       ],

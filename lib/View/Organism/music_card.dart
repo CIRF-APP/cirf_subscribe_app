@@ -1,6 +1,7 @@
 import 'package:cirf_subscription_app/Bloc/music_control_bloc.dart';
 import 'package:cirf_subscription_app/Common/ads_interstitial.dart';
 import 'package:cirf_subscription_app/Model/music_model.dart';
+import 'package:cirf_subscription_app/View/Atom/fixed_text.dart';
 import 'package:cirf_subscription_app/View/Organism/music_page_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,42 +25,51 @@ class _MusicCardState extends State<MusicCard> {
   @override
   void initState() {
     super.initState();
-    adsInterstitial.interstitialLoad();
   }
 
   @override
   Widget build(BuildContext context) {
     final MusicControlBloc bloc = Provider.of<MusicControlBloc>(context);
 
-    return SizedBox(
-      width: 275,
-      height: 240,
-      child: ElevatedButton(
-        onPressed: () {
-          bloc.setMusicData.add(widget.musicData);
-          showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            isScrollControlled: true,
-            enableDrag: false,
-            context: context,
-            builder: (BuildContext context) {
-              return MusicPage(musicData: widget.musicData);
-            },
-          );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: GestureDetector(
+            onTap: () {
+              bloc.setMusicData.add(widget.musicData);
+              showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                isScrollControlled: true,
+                enableDrag: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return MusicPage(musicData: widget.musicData);
+                },
+              );
 
-          adsInterstitial.show(() async {
-            await bloc.playFromCard();
-          });
-        },
-        child: SizedBox(
-          width: 275,
-          height: 240,
-          child: FittedBox(
-            fit: BoxFit.cover,
+              setState(() {
+                adsInterstitial.interstitialLoad();
+              });
+
+              adsInterstitial.show(() async {
+                await bloc.playFromCard();
+              });
+            },
             child: Image.network(widget.musicData.imageFile),
           ),
         ),
-      ),
+        const SizedBox(height: 5),
+        FixedText(
+          text: widget.musicData.audioName,
+          size: 20,
+          color: Colors.white,
+          weight: FontWeight.bold,
+        ),
+      ],
     );
   }
 }
